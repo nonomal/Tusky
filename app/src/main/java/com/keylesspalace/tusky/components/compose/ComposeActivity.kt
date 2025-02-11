@@ -50,8 +50,11 @@ import androidx.core.content.FileProvider
 import androidx.core.content.res.use
 import androidx.core.view.ContentInfoCompat
 import androidx.core.view.OnReceiveContentListener
+import androidx.core.view.WindowInsetsCompat.Type.ime
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -73,6 +76,7 @@ import com.keylesspalace.tusky.adapter.EmojiAdapter
 import com.keylesspalace.tusky.adapter.LocaleAdapter
 import com.keylesspalace.tusky.adapter.OnEmojiSelectedListener
 import com.keylesspalace.tusky.components.compose.ComposeViewModel.ConfirmationKind
+import com.keylesspalace.tusky.components.compose.ComposeViewModel.QueuedMedia
 import com.keylesspalace.tusky.components.compose.dialog.CaptionDialog
 import com.keylesspalace.tusky.components.compose.dialog.makeFocusDialog
 import com.keylesspalace.tusky.components.compose.dialog.showAddPollDialog
@@ -102,8 +106,10 @@ import com.keylesspalace.tusky.util.getSerializableCompat
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.highlightSpans
 import com.keylesspalace.tusky.util.loadAvatar
+import com.keylesspalace.tusky.util.map
 import com.keylesspalace.tusky.util.modernLanguageCode
 import com.keylesspalace.tusky.util.setDrawableTint
+import com.keylesspalace.tusky.util.setOnWindowInsetsChangeListener
 import com.keylesspalace.tusky.util.show
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
@@ -162,7 +168,7 @@ class ComposeActivity :
     private val takePictureLauncher =
         registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
             if (success) {
-                pickMedia(photoUploadUri!!)
+                viewModel.pickMedia(photoUploadUri!!)
             }
         }
     private val pickMediaFilePermissionLauncher =
@@ -194,9 +200,11 @@ class ComposeActivity :
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            uris.forEach { uri ->
-                pickMedia(uri)
-            }
+            viewModel.pickMedia(
+                uris.map { uri ->
+                    ComposeViewModel.MediaData(uri)
+                }
+            )
         }
     }
 
@@ -207,17 +215,15 @@ class ComposeActivity :
             viewModel.cropImageItemOld?.let { itemOld ->
                 val size = getMediaSize(contentResolver, uriNew)
 
-                lifecycleScope.launch {
-                    viewModel.addMediaToQueue(
-                        itemOld.type,
-                        uriNew,
-                        size,
-                        itemOld.description,
-                        // Intentionally reset focus when cropping
-                        null,
-                        itemOld
-                    )
-                }
+                viewModel.addMediaToQueue(
+                    type = itemOld.type,
+                    uri = uriNew,
+                    mediaSize = size,
+                    description = itemOld.description,
+                    // Intentionally reset focus when cropping
+                    focus = null,
+                    replaceItem = itemOld
+                )
             }
         } else if (result == CropImage.CancelledResult) {
             Log.w(TAG, "Edit image cancelled by user")
@@ -256,6 +262,16 @@ class ComposeActivity :
             setTheme(R.style.TuskyDialogActivityBlackTheme)
         }
         setContentView(binding.root)
+
+        binding.composeBottomBar.setOnWindowInsetsChangeListener { windowInsets ->
+            val insets = windowInsets.getInsets(systemBars() or ime())
+            binding.composeBottomBar.updatePadding(bottom = insets.bottom + at.connyduck.sparkbutton.helpers.Utils.dpToPx(this@ComposeActivity, 4))
+            binding.addMediaBottomSheet.updatePadding(bottom = insets.bottom + at.connyduck.sparkbutton.helpers.Utils.dpToPx(this@ComposeActivity, 50))
+            binding.emojiView.updatePadding(bottom = insets.bottom + at.connyduck.sparkbutton.helpers.Utils.dpToPx(this@ComposeActivity, 50))
+            binding.composeOptionsBottomSheet.updatePadding(bottom = insets.bottom + at.connyduck.sparkbutton.helpers.Utils.dpToPx(this@ComposeActivity, 50))
+            binding.composeScheduleView.updatePadding(bottom = insets.bottom + at.connyduck.sparkbutton.helpers.Utils.dpToPx(this@ComposeActivity, 50))
+            (binding.composeMainScrollView.layoutParams as ViewGroup.MarginLayoutParams).bottomMargin = insets.bottom + at.connyduck.sparkbutton.helpers.Utils.dpToPx(this@ComposeActivity, 58)
+        }
 
         setupActionBar()
 
@@ -308,7 +324,7 @@ class ComposeActivity :
         }
 
         if (!composeOptions?.scheduledAt.isNullOrEmpty()) {
-            binding.composeScheduleView.setDateTime(composeOptions?.scheduledAt)
+            binding.composeScheduleView.setDateTime(composeOptions.scheduledAt)
         }
 
         setupLanguageSpinner(getInitialLanguages(composeOptions?.language, activeAccount))
@@ -347,14 +363,14 @@ class ComposeActivity :
                     when (intent.action) {
                         Intent.ACTION_SEND -> {
                             intent.getParcelableExtraCompat<Uri>(Intent.EXTRA_STREAM)?.let { uri ->
-                                pickMedia(uri)
+                                viewModel.pickMedia(uri)
                             }
                         }
                         Intent.ACTION_SEND_MULTIPLE -> {
                             intent.getParcelableArrayListExtraCompat<Uri>(Intent.EXTRA_STREAM)
-                                ?.forEach { uri ->
-                                    pickMedia(uri)
-                                }
+                                ?.map { uri ->
+                                    ComposeViewModel.MediaData(uri)
+                                }?.let(viewModel::pickMedia)
                         }
                     }
                 }
@@ -462,9 +478,9 @@ class ComposeActivity :
         binding.composeEditField.setAdapter(
             ComposeAutoCompleteAdapter(
                 this,
-                preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false),
-                preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false),
-                preferences.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, true)
+                animateAvatar = preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false),
+                animateEmojis = preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false),
+                showBotBadge = preferences.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, true)
             )
         )
         binding.composeEditField.setTokenizer(ComposeTokenizer())
@@ -557,16 +573,25 @@ class ComposeActivity :
 
         lifecycleScope.launch {
             viewModel.uploadError.collect { throwable ->
-                if (throwable is UploadServerError) {
-                    displayTransientMessage(throwable.errorMessage)
-                } else {
-                    displayTransientMessage(
-                        getString(
-                            R.string.error_media_upload_sending_fmt,
-                            throwable.message
-                        )
+                val errorString = when (throwable) {
+                    is UploadServerError -> throwable.errorMessage
+                    is FileSizeException -> {
+                        val decimalFormat = DecimalFormat("0.##")
+                        val allowedSizeInMb = throwable.allowedSizeInBytes.toDouble() / (1024 * 1024)
+                        val formattedSize = decimalFormat.format(allowedSizeInMb)
+                        getString(R.string.error_multimedia_size_limit, formattedSize)
+                    }
+                    is VideoOrImageException -> getString(
+                        R.string.error_media_upload_image_or_video
+                    )
+                    is CouldNotOpenFileException -> getString(R.string.error_media_upload_opening)
+                    is MediaTypeException -> getString(R.string.error_media_upload_opening)
+                    else -> getString(
+                        R.string.error_media_upload_sending_fmt,
+                        throwable.message
                     )
                 }
+                displayTransientMessage(errorString)
             }
         }
 
@@ -843,12 +868,8 @@ class ComposeActivity :
                 )
             )
 
-            var oneMediaWithoutDescription = false
-            for (media in viewModel.media.value) {
-                if (media.description.isNullOrEmpty()) {
-                    oneMediaWithoutDescription = true
-                    break
-                }
+            val oneMediaWithoutDescription = viewModel.media.value.any { media ->
+                media.description.isNullOrEmpty()
             }
             binding.descriptionMissingWarningButton.visibility = if (oneMediaWithoutDescription) View.VISIBLE else View.GONE
         }
@@ -1094,12 +1115,27 @@ class ComposeActivity :
         if (contentInfo.clip.description.hasMimeType("image/*")) {
             val split = contentInfo.partition { item: ClipData.Item -> item.uri != null }
             split.first?.let { content ->
-                for (i in 0 until content.clip.itemCount) {
-                    pickMedia(
-                        content.clip.getItemAt(i).uri,
-                        contentInfo.clip.description.label as String?
-                    )
+                val description = (contentInfo.clip.description.label as String?)?.let {
+                    // The Gboard android keyboard attaches this text whenever the user
+                    // pastes something from the keyboard's suggestion bar.
+                    // Due to different end user locales, the exact text may vary, but at
+                    // least in version 13.4.08, all of the translations contained the
+                    // string "Gboard".
+                    if ("Gboard" in it) {
+                        null
+                    } else {
+                        it
+                    }
                 }
+
+                viewModel.pickMedia(
+                    content.clip.map { clipItem ->
+                        ComposeViewModel.MediaData(
+                            uri = clipItem.uri,
+                            description = description
+                        )
+                    }
+                )
             }
             return split.second
         }
@@ -1201,45 +1237,6 @@ class ComposeActivity :
 
     private fun removeMediaFromQueue(item: QueuedMedia) {
         viewModel.removeMediaFromQueue(item)
-    }
-
-    private fun sanitizePickMediaDescription(description: String?): String? {
-        if (description == null) {
-            return null
-        }
-
-        // The Gboard android keyboard attaches this text whenever the user
-        // pastes something from the keyboard's suggestion bar.
-        // Due to different end user locales, the exact text may vary, but at
-        // least in version 13.4.08, all of the translations contained the
-        // string "Gboard".
-        if ("Gboard" in description) {
-            return null
-        }
-
-        return description
-    }
-
-    private fun pickMedia(uri: Uri, description: String? = null) {
-        val sanitizedDescription = sanitizePickMediaDescription(description)
-
-        lifecycleScope.launch {
-            viewModel.pickMedia(uri, sanitizedDescription).onFailure { throwable ->
-                val errorString = when (throwable) {
-                    is FileSizeException -> {
-                        val decimalFormat = DecimalFormat("0.##")
-                        val allowedSizeInMb = throwable.allowedSizeInBytes.toDouble() / (1024 * 1024)
-                        val formattedSize = decimalFormat.format(allowedSizeInMb)
-                        getString(R.string.error_multimedia_size_limit, formattedSize)
-                    }
-                    is VideoOrImageException -> getString(
-                        R.string.error_media_upload_image_or_video
-                    )
-                    else -> getString(R.string.error_media_upload_opening)
-                }
-                displayTransientMessage(errorString)
-            }
-        }
     }
 
     private fun showContentWarning(show: Boolean) {
@@ -1421,30 +1418,6 @@ class ComposeActivity :
             val animateEmojis = preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false)
             binding.emojiView.adapter = EmojiAdapter(emojiList, this@ComposeActivity, animateEmojis)
             enableButton(binding.composeEmojiButton, true, emojiList.isNotEmpty())
-        }
-    }
-
-    data class QueuedMedia(
-        val localId: Int,
-        val uri: Uri,
-        val type: Type,
-        val mediaSize: Long,
-        val uploadPercent: Int = 0,
-        val id: String? = null,
-        val description: String? = null,
-        val focus: Attachment.Focus? = null,
-        val state: State
-    ) {
-        enum class Type {
-            IMAGE,
-            VIDEO,
-            AUDIO
-        }
-        enum class State {
-            UPLOADING,
-            UNPROCESSED,
-            PROCESSED,
-            PUBLISHED
         }
     }
 

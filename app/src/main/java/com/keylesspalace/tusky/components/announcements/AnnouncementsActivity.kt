@@ -28,7 +28,6 @@ import androidx.core.view.MenuProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.color.MaterialColors
 import com.keylesspalace.tusky.BottomSheetActivity
 import com.keylesspalace.tusky.R
 import com.keylesspalace.tusky.StatusListActivity
@@ -39,16 +38,13 @@ import com.keylesspalace.tusky.settings.PrefKeys
 import com.keylesspalace.tusky.util.Error
 import com.keylesspalace.tusky.util.Loading
 import com.keylesspalace.tusky.util.Success
+import com.keylesspalace.tusky.util.ensureBottomPadding
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.show
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
 import com.keylesspalace.tusky.util.unsafeLazy
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.view.EmojiPicker
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import com.mikepenz.iconics.utils.colorInt
-import com.mikepenz.iconics.utils.sizeDp
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -92,6 +88,7 @@ class AnnouncementsActivity :
 
         binding.swipeRefreshLayout.setOnRefreshListener(this::refreshAnnouncements)
 
+        binding.announcementsList.ensureBottomPadding()
         binding.announcementsList.setHasFixedSize(true)
         binding.announcementsList.layoutManager = LinearLayoutManager(this)
         val divider = DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
@@ -152,12 +149,6 @@ class AnnouncementsActivity :
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
         menuInflater.inflate(R.menu.activity_announcements, menu)
-        menu.findItem(R.id.action_search)?.apply {
-            icon = IconicsDrawable(this@AnnouncementsActivity, GoogleMaterial.Icon.gmd_search).apply {
-                sizeDp = 20
-                colorInt = MaterialColors.getColor(binding.includedToolbar.toolbar, android.R.attr.textColorPrimary)
-            }
-        }
     }
 
     override fun onMenuItemSelected(menuItem: MenuItem): Boolean {

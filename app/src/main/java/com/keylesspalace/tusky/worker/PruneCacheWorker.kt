@@ -25,23 +25,23 @@ import androidx.work.CoroutineWorker
 import androidx.work.ForegroundInfo
 import androidx.work.WorkerParameters
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper
-import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper.NOTIFICATION_ID_PRUNE_CACHE
+import com.keylesspalace.tusky.components.systemnotifications.NotificationService
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.DatabaseCleaner
+import com.keylesspalace.tusky.util.deleteStaleCachedMedia
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 
 /** Prune the database cache of old statuses. */
 @HiltWorker
 class PruneCacheWorker @AssistedInject constructor(
-    @Assisted appContext: Context,
+    @Assisted private val appContext: Context,
     @Assisted workerParams: WorkerParameters,
     private val databaseCleaner: DatabaseCleaner,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    val notificationService: NotificationService,
 ) : CoroutineWorker(appContext, workerParams) {
-    val notification: Notification = NotificationHelper.createWorkerNotification(
-        applicationContext,
+    val notification: Notification = notificationService.createWorkerNotification(
         R.string.notification_prune_cache
     )
 
@@ -50,11 +50,14 @@ class PruneCacheWorker @AssistedInject constructor(
             Log.d(TAG, "Pruning database using account ID: ${account.id}")
             databaseCleaner.cleanupOldData(account.id, MAX_HOMETIMELINE_ITEMS_IN_CACHE, MAX_NOTIFICATIONS_IN_CACHE)
         }
+
+        deleteStaleCachedMedia(appContext.getExternalFilesDir("Tusky"))
+
         return Result.success()
     }
 
     override suspend fun getForegroundInfo() = ForegroundInfo(
-        NOTIFICATION_ID_PRUNE_CACHE,
+        NotificationService.NOTIFICATION_ID_PRUNE_CACHE,
         notification
     )
 

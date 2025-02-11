@@ -44,6 +44,7 @@ import com.squareup.moshi.adapter
 import java.util.Locale
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
 import okhttp3.ResponseBody
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertEquals
@@ -67,7 +68,7 @@ import retrofit2.Response
  * Created by charlag on 3/7/18.
  */
 
-@Config(sdk = [28])
+@Config(sdk = [34])
 @RunWith(AndroidJUnit4::class)
 class ComposeActivityTest {
     private lateinit var activity: ComposeActivity
@@ -108,6 +109,8 @@ class ComposeActivityTest {
         activity = controller.get()
 
         accountManagerMock = mock {
+            on { accounts } doReturn listOf(account)
+            on { accountsFlow } doReturn MutableStateFlow(listOf(account))
             on { activeAccount } doReturn account
         }
 

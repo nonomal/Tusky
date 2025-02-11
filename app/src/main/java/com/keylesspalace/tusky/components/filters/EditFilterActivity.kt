@@ -1,12 +1,29 @@
+/* Copyright 2024 Tusky contributors
+ *
+ * This file is a part of Tusky.
+ *
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation; either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * Tusky is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+ * Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with Tusky; if not,
+ * see <http://www.gnu.org/licenses>. */
+
 package com.keylesspalace.tusky.components.filters
 
-import android.content.Context
 import android.content.DialogInterface.BUTTON_POSITIVE
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.AdapterView
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.size
+import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import at.connyduck.calladapter.networkresult.fold
@@ -28,7 +45,6 @@ import com.keylesspalace.tusky.util.isHttpNotFound
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 
@@ -78,6 +94,12 @@ class EditFilterActivity : BaseActivity() {
             }
         )
 
+        ViewCompat.setOnApplyWindowInsetsListener(binding.scrollView) { scrollView, insets ->
+            val systemBarsInsets = insets.getInsets(systemBars())
+            scrollView.updatePadding(bottom = systemBarsInsets.bottom)
+            insets.inset(0, 0, 0, systemBarsInsets.bottom)
+        }
+
         binding.actionChip.setOnClickListener { showAddKeywordDialog() }
         binding.filterSaveButton.setOnClickListener { saveChanges() }
         binding.filterDeleteButton.setOnClickListener {
@@ -124,6 +146,7 @@ class EditFilterActivity : BaseActivity() {
 
         if (originalFilter == null) {
             binding.filterActionWarn.isChecked = true
+            initializeDurationDropDown(false)
         } else {
             loadFilter()
         }
@@ -165,7 +188,11 @@ class EditFilterActivity : BaseActivity() {
     // Populate the UI from the filter's members
     private fun loadFilter() {
         viewModel.load(filter)
-        val durationNames = if (filter.expiresAt != null) {
+        initializeDurationDropDown(withNoChange = filter.expiresAt != null)
+    }
+
+    private fun initializeDurationDropDown(withNoChange: Boolean) {
+        val durationNames = if (withNoChange) {
             arrayOf(getString(R.string.duration_no_change)) + resources.getStringArray(R.array.filter_duration_names)
         } else {
             resources.getStringArray(R.array.filter_duration_names)
@@ -322,19 +349,5 @@ class EditFilterActivity : BaseActivity() {
 
     companion object {
         const val FILTER_TO_EDIT = "FilterToEdit"
-
-        // Mastodon *stores* the absolute date in the filter,
-        // but create/edit take a number of seconds (relative to the time the operation is posted)
-        fun getSecondsForDurationIndex(index: Int, context: Context?, default: Date? = null): Int? {
-            return when (index) {
-                -1 -> if (default == null) {
-                    default
-                } else {
-                    ((default.time - System.currentTimeMillis()) / 1000).toInt()
-                }
-                0 -> null
-                else -> context?.resources?.getIntArray(R.array.filter_duration_values)?.get(index)
-            }
-        }
     }
 }

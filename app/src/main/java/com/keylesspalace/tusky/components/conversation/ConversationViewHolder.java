@@ -69,13 +69,13 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
 
     void setupWithConversation(
             @NonNull ConversationViewData conversation,
-            @Nullable Object payloads
+            @NonNull List<Object> payloads
     ) {
 
         StatusViewData.Concrete statusViewData = conversation.getLastStatus();
         Status status = statusViewData.getStatus();
 
-        if (payloads == null) {
+        if (payloads.isEmpty()) {
             TimelineAccount account = status.getAccount();
 
             setupCollapsedState(statusViewData.isCollapsible(), statusViewData.isCollapsed(), statusViewData.isExpanded(), status.getSpoilerText(), listener);
@@ -87,7 +87,6 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
             setDisplayName(displayName, account.getEmojis(), statusDisplayOptions);
             setUsername(account.getUsername());
             setMetaData(statusViewData, statusDisplayOptions, listener);
-            setIsReply(status.getInReplyToId() != null);
             setFavourited(status.getFavourited());
             setBookmarked(status.getBookmarked());
             List<Attachment> attachments = status.getAttachments();
@@ -119,11 +118,9 @@ public class ConversationViewHolder extends StatusBaseViewHolder {
 
             setAvatars(conversation.getAccounts());
         } else {
-            if (payloads instanceof List) {
-                for (Object item : (List<?>) payloads) {
-                    if (Key.KEY_CREATED.equals(item)) {
-                        setMetaData(statusViewData, statusDisplayOptions, listener);
-                    }
+            for (Object item : payloads) {
+                if (Key.KEY_CREATED.equals(item)) {
+                    setMetaData(statusViewData, statusDisplayOptions, listener);
                 }
             }
         }

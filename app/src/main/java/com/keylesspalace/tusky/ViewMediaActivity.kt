@@ -43,6 +43,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.keylesspalace.tusky.BuildConfig.APPLICATION_ID
 import com.keylesspalace.tusky.components.viewthread.ViewThreadActivity
 import com.keylesspalace.tusky.databinding.ActivityViewMediaBinding
@@ -91,11 +92,9 @@ class ViewMediaActivity :
             if (isGranted) {
                 downloadMedia()
             } else {
-                showErrorDialog(
-                    binding.toolbar,
-                    R.string.error_media_download_permission,
-                    R.string.action_retry
-                ) { requestDownloadMedia() }
+                Snackbar.make(binding.toolbar, getString(R.string.error_media_download_permission), Snackbar.LENGTH_SHORT)
+                    .setAction(R.string.action_retry) { requestDownloadMedia() }
+                    .show()
             }
         }
 
@@ -157,9 +156,13 @@ class ViewMediaActivity :
             true
         }
 
+        // yes it is deprecated, but it looks cool so it stays for now
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE
 
-        window.statusBarColor = Color.BLACK
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            @Suppress("DEPRECATION")
+            window.statusBarColor = Color.BLACK
+        }
         window.sharedElementEnterTransition.addListener(object : NoopTransitionListener {
             override fun onTransitionEnd(transition: Transition) {
                 adapter.onTransitionEnd(binding.viewPager.currentItem)

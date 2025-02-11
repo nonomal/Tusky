@@ -39,7 +39,6 @@ import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.loadAvatar
 import com.keylesspalace.tusky.util.show
 import com.keylesspalace.tusky.util.unsafeLazy
-import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
 import com.keylesspalace.tusky.viewmodel.AccountsInListViewModel
 import com.keylesspalace.tusky.viewmodel.State
@@ -50,28 +49,33 @@ import kotlinx.coroutines.launch
 private typealias AccountInfo = Pair<TimelineAccount, Boolean>
 
 @AndroidEntryPoint
-class AccountsInListFragment : DialogFragment(R.layout.fragment_accounts_in_list) {
+class AccountsInListFragment : DialogFragment() {
 
     @Inject
     lateinit var preferences: SharedPreferences
 
     private val viewModel: AccountsInListViewModel by viewModels()
-    private val binding by viewBinding(FragmentAccountsInListBinding::bind)
+    private lateinit var binding: FragmentAccountsInListBinding
 
     private lateinit var listId: String
     private lateinit var listName: String
 
     private val radius by unsafeLazy { resources.getDimensionPixelSize(R.dimen.avatar_radius_48dp) }
 
+    private val animateAvatar by unsafeLazy { preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false) }
+    private val animateEmojis by unsafeLazy { preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false) }
+    private val showBotOverlay by unsafeLazy { preferences.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, true) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.TuskyDialogFragmentStyle)
         val args = requireArguments()
         listId = args.getString(LIST_ID_ARG)!!
         listName = args.getString(LIST_NAME_ARG)!!
 
         viewModel.load(listId)
     }
+
+    override fun getTheme() = R.style.TuskyDialogFragment
 
     override fun onStart() {
         super.onStart()
@@ -84,17 +88,18 @@ class AccountsInListFragment : DialogFragment(R.layout.fragment_accounts_in_list
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = FragmentAccountsInListBinding.inflate(layoutInflater)
         val adapter = Adapter()
         val searchAdapter = SearchAdapter()
 
-        binding.accountsRecycler.layoutManager = LinearLayoutManager(view.context)
+        binding.accountsRecycler.layoutManager = LinearLayoutManager(binding.root.context)
         binding.accountsRecycler.adapter = adapter
 
-        binding.accountsSearchRecycler.layoutManager = LinearLayoutManager(view.context)
+        binding.accountsSearchRecycler.layoutManager = LinearLayoutManager(binding.root.context)
         binding.accountsSearchRecycler.adapter = searchAdapter
 
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             viewModel.state.collect { state ->
                 adapter.submitList(state.accounts.getOrDefault(emptyList()))
 
@@ -122,6 +127,7 @@ class AccountsInListFragment : DialogFragment(R.layout.fragment_accounts_in_list
                 return true
             }
         })
+        return binding.root
     }
 
     private fun setupSearchView(searchAdapter: SearchAdapter, state: State) {
@@ -200,9 +206,6 @@ class AccountsInListFragment : DialogFragment(R.layout.fragment_accounts_in_list
             position: Int
         ) {
             val account = getItem(position)
-            val animateAvatar = preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false)
-            val animateEmojis = preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false)
-            val showBotOverlay = preferences.getBoolean(PrefKeys.SHOW_BOT_OVERLAY, false)
             holder.binding.displayNameTextView.text = account.name.emojify(account.emojis, holder.binding.displayNameTextView, animateEmojis)
             holder.binding.usernameTextView.text = account.username
             holder.binding.avatarBadge.visible(showBotOverlay && account.bot)
@@ -255,11 +258,9 @@ class AccountsInListFragment : DialogFragment(R.layout.fragment_accounts_in_list
         ) {
             val (account, inAList) = getItem(position)
 
-            val animateAvatar = preferences.getBoolean(PrefKeys.ANIMATE_GIF_AVATARS, false)
-            val animateEmojis = preferences.getBoolean(PrefKeys.ANIMATE_CUSTOM_EMOJIS, false)
-
             holder.binding.displayNameTextView.text = account.name.emojify(account.emojis, holder.binding.displayNameTextView, animateEmojis)
             holder.binding.usernameTextView.text = account.username
+            holder.binding.avatarBadge.visible(showBotOverlay && account.bot)
             loadAvatar(account.avatar, holder.binding.avatar, radius, animateAvatar)
 
             holder.binding.rejectButton.apply {

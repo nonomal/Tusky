@@ -3,7 +3,10 @@ package com.keylesspalace.tusky
 import android.app.Activity
 import android.app.NotificationManager
 import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.viewpager2.widget.ViewPager2
@@ -11,14 +14,16 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import at.connyduck.calladapter.networkresult.NetworkResult
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.components.accountlist.AccountListActivity
-import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper
+import com.keylesspalace.tusky.components.systemnotifications.NotificationService
+import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Account
 import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.entity.TimelineAccount
+import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.getSerializableExtraCompat
 import java.util.Date
-import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.flow.MutableStateFlow
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -95,12 +100,19 @@ class MainActivityTest {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
         val shadowNotificationManager = shadowOf(notificationManager)
 
-        NotificationHelper.createNotificationChannelsForAccount(accountEntity, context)
+        val notificationService = NotificationService(
+            notificationManager,
+            mock {
+                on { areNotificationsEnabled() } doReturn true
+            },
+            mock(),
+            context,
+        )
+
+        notificationService.createNotificationChannelsForAccount(accountEntity)
 
         runInBackground {
-            val notification = NotificationHelper.make(
-                context,
-                notificationManager,
+            val notification = notificationService.createBaseNotification(
                 Notification(
                     type = type,
                     id = "id",
@@ -116,8 +128,7 @@ class MainActivityTest {
                     status = null,
                     report = null
                 ),
-                accountEntity,
-                true
+                accountEntity
             )
             notificationManager.notify("id", 1, notification)
         }
@@ -129,17 +140,20 @@ class MainActivityTest {
     private fun startMainActivity(intent: Intent): Activity {
         val controller = Robolectric.buildActivity(MainActivity::class.java, intent)
         val activity = controller.get()
-        activity.eventHub = EventHub()
-        activity.accountManager = mock {
+        val eventHub = EventHub()
+        activity.eventHub = eventHub
+        val accountManager: AccountManager = mock {
+            on { accounts } doReturn listOf(accountEntity)
+            on { accountsFlow } doReturn MutableStateFlow(listOf(accountEntity))
             on { activeAccount } doReturn accountEntity
         }
-        activity.draftsAlert = mock {}
-        activity.shareShortcutHelper = mock {}
-        activity.externalScope = TestScope()
-        activity.mastodonApi = mock {
+        activity.accountManager = accountManager
+        activity.draftsAlert = mock { }
+        val api: MastodonApi = mock {
             onBlocking { accountVerifyCredentials() } doReturn NetworkResult.success(account)
-            onBlocking { listAnnouncements(false) } doReturn NetworkResult.success(emptyList())
+            onBlocking { announcements() } doReturn NetworkResult.success(emptyList())
         }
+        activity.mastodonApi = api
         activity.preferences = mock(defaultAnswer = {
             when (it.method.returnType) {
                 String::class.java -> "test"
@@ -147,6 +161,21 @@ class MainActivityTest {
                 else -> null
             }
         })
+        val viewModel = MainViewModel(
+            context = mock {
+                on { getSystemService(Context.NOTIFICATION_SERVICE) } doReturn mock<NotificationManager>()
+            },
+            api = api,
+            eventHub = eventHub,
+            accountManager = accountManager,
+            shareShortcutHelper = mock(),
+            notificationService = mock(),
+        )
+        val testViewModelFactory = viewModelFactory {
+            initializer { viewModel }
+        }
+        activity.viewModelProviderFactory = testViewModelFactory
+
         controller.create().start()
         return activity
     }

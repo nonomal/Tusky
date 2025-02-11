@@ -6,6 +6,45 @@
 
 ### Significant bug fixes
 
+## v27.2
+
+### Significant bug fixes
+
+- The title of a hashtag tab now shows the actual hashtags again (instead of just "Hashtags") https://github.com/tuskyapp/Tusky/pull/4868
+- Makes sure the background color of a dialogs is correct https://github.com/tuskyapp/Tusky/pull/4864
+- Fixes an issue where Tusky would freeze while loading a timeline gap https://github.com/tuskyapp/Tusky/pull/4865
+
+## v27.1
+
+### New features and other improvements
+
+- The width of the tab indicator has been increased https://github.com/tuskyapp/Tusky/pull/4849
+
+### Significant bug fixes
+
+- Improves rendering of some animated custom emojis https://github.com/tuskyapp/Tusky/pull/4281
+- Fixes an issue where the input field for media descriptions was too small in some cases https://github.com/tuskyapp/Tusky/pull/4831
+- Fixes an issue where hashtags at the end of posts were duplicated https://github.com/tuskyapp/Tusky/pull/4845
+- Fixes an issue that prevented lists from being edited https://github.com/tuskyapp/Tusky/pull/4851
+
+## v27.0
+
+### New features and other improvements
+
+- Tusky has been redesigned with Material 3 https://github.com/tuskyapp/Tusky/pull/4637 https://github.com/tuskyapp/Tusky/pull/4673
+- Support for Notification Policies (Mastodon 4.3 feature) https://github.com/tuskyapp/Tusky/pull/4768
+- Hashtags at the end of posts are now shown in a separate bar https://github.com/tuskyapp/Tusky/pull/4761
+- Full support for folding devices https://github.com/tuskyapp/Tusky/pull/4689
+- Improved post rendering in some edge cases https://github.com/tuskyapp/Tusky/pull/4650 https://github.com/tuskyapp/Tusky/pull/4672 https://github.com/tuskyapp/Tusky/pull/4723
+- Descriptions can now be added to audio attachments https://github.com/tuskyapp/Tusky/pull/4711
+- The screen keyboard now pops up automatically when opening a dialog that contains a textfield https://github.com/tuskyapp/Tusky/pull/4667
+
+### Significant bug fixes
+
+- fixes a bug where Tusky would drop your draft when switching apps https://github.com/tuskyapp/Tusky/pull/4685 https://github.com/tuskyapp/Tusky/pull/4813 https://github.com/tuskyapp/Tusky/pull/4818
+- fixes a bug where Tusky would drop media that is being added to a post https://github.com/tuskyapp/Tusky/pull/4662
+- fixes a bug that caused the login to fail in some cases https://github.com/tuskyapp/Tusky/pull/4704
+
 ## v26.2
 
 ### Significant bug fixes

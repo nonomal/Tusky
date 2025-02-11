@@ -136,13 +136,13 @@
     <string name="label_header">Intestazione</string>
     <string name="link_whats_an_instance">Cos\'è un\'istanza?</string>
     <string name="login_connection">Connessione…</string>
-    <string name="dialog_whats_an_instance">L\'indirizzo o il dominio di qualsiasi istanza può essere inserito qui, come mastodon.social, icosahedron.website, social.tchncs.de, e <a href="https://instances.social">altro!</a> 
-\n 
-\nSe non hai ancora un account, puoi inserire il nome di un\'istanza alla quale vuoi iscriverti e creare un account. 
-\n 
-\nUn\'istanza è il luogo dove l\'account è custodito, ma puoi facilmente comunicare e seguire gente su altre istanze come se fossero sullo stesso sito. 
-\n 
-\nPiù info possono essere trovate su <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
+    <string name="dialog_whats_an_instance">L\'indirizzo o il dominio di qualsiasi istanza può essere inserito qui, come mastodon.social, icosahedron.website, social.tchncs.de, e <a href="https://instances.social">altro!</a>
+\n \u0020
+\nSe non hai ancora un account, puoi inserire il nome di un\'istanza alla quale vuoi iscriverti e creare un account.
+\n \u0020
+\nUn\'istanza è il luogo dove l\'account è custodito, ma puoi facilmente comunicare e seguire gente su altre istanze come se fossero sullo stesso sito.
+\n \u0020
+\nPiù info possono essere trovate su <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Terminando il caricamento dei media</string>
     <string name="dialog_message_uploading_media">Caricamento…</string>
     <string name="dialog_download_image">Scarica</string>
@@ -249,7 +249,7 @@
     <string name="abbreviated_minutes_ago">%1$dmin</string>
     <string name="abbreviated_seconds_ago">%1$ds</string>
     <string name="follows_you">Ti segue</string>
-    <string name="pref_title_alway_show_sensitive_media">Mostra sempre i contenuti sensibili</string>
+    <string name="pref_title_alway_show_sensitive_media">Mostra sempre i media sensibili</string>
     <string name="title_media">Media</string>
     <string name="replying_to">Rispondendo a @%1$s</string>
     <string name="load_more_placeholder_text">Carica altro</string>
@@ -351,7 +351,7 @@
     <string name="download_media">Scarica media</string>
     <string name="downloading_media">Scaricando media</string>
     <string name="compose_shortcut_long_label">Componi post</string>
-    <string name="edit_hashtag_hint">Hashtag senza #</string>
+    <string name="pick_hashtag_hint">Hashtag senza #</string>
     <string name="compose_shortcut_short_label">Componi</string>
     <string name="notifications_clear">Cancella</string>
     <string name="notifications_apply_filter">Filtra</string>
@@ -423,7 +423,7 @@
     <string name="report_remote_instance">Inoltra a %1$s</string>
     <string name="failed_report">Segnalazione fallita</string>
     <string name="failed_fetch_posts">Scaricamento dei post fallito</string>
-    <string name="report_description_1">La segnalazione sarà inviata al moderatore del tuo server. Puoi spiegare perchè stai segnalando l\'utente qui sotto:</string>
+    <string name="report_description_1">La segnalazione sarà inviata al moderatore del tuo server. Puoi spiegare perché stai segnalando l\'utente qui sotto:</string>
     <string name="report_description_remote_instance">L\'utente è su un altro server. Mandare una copia della segnalazione anche lì\?</string>
     <string name="title_accounts">Utenti</string>
     <string name="failed_search">Errore durante la ricerca</string>
@@ -508,11 +508,11 @@
     <string name="action_delete_conversation">Elimina conversazione</string>
     <string name="wellbeing_mode_notice">Alcune informazioni che potrebbero influenzare il tuo benessere mentale saranno nascoste. Questo include:
 \n
-\n - Notifiche riguardo a Preferiti/Boost/Following
-\n - Conteggio dei Preferiti/Boost nei post
-\n - Statistiche riguardo a Preferiti/Post nei profili
+\n- Notifiche riguardo a Preferiti/Boost/Following
+\n- Conteggio dei Preferiti/Boost nei post
+\n- Statistiche riguardo a Preferiti/Post nei profili
 \n
-\n Le notifiche push non saranno influenzate, ma puoi modificare le tue impostazioni delle notifiche manualmente.</string>
+\nLe notifiche push non saranno influenzate, ma puoi modificare le tue impostazioni delle notifiche manualmente.</string>
     <string name="action_unbookmark">Rimuovi segnalibro</string>
     <string name="pref_title_confirm_favourites">Chiedi conferma prima di mettere nei preferiti</string>
     <string name="duration_14_days">14 giorni</string>
@@ -537,14 +537,10 @@
     <string name="saving_draft">Salvataggio bozza…</string>
     <string name="action_dismiss">Scartare</string>
     <string name="action_details">Dettagli</string>
-    <string name="tips_push_notification_migration">Riaccedi a tutti le utenze per attivare il supporto delle notifiche.</string>
-    <string name="dialog_push_notification_migration">Al fine di utilizzare le notifiche tramite UnifiedPush, Tusky ha bisogno del permesso di sottoscrivere alle notifiche nella tua istanza Mastodon. Questo richiede un nuovo accesso per cambiare l\'OAuth precedentemente concesso a Tusky. Usare questa opzione qui o nelle preferenze dell\'account preserva tutte le tue bozze locali e la memoria temporanea (cache).</string>
     <string name="filter_expiration_format">%1$s (%2$s)</string>
-    <string name="dialog_push_notification_migration_other_accounts">Nuovo accesso eseguito per l\'utenza corrente al fine di garantire il permesso delle notifiche a Tusky. Però hai altre utenze che non sono state migrate in questo modo. Cambia utenza e riaccedi una alla volta per abilitare il supporto alle notifiche UnifiedPush.</string>
     <string name="account_date_joined">Registrato da %1$s</string>
     <string name="error_multimedia_size_limit">Video and audio files non possono eccedere %1$s MB in dimensione.</string>
     <string name="error_image_edit_failed">L\'immagine non può essere modificata.</string>
-    <string name="title_migration_relogin">Riaccedi per le notifiche</string>
     <string name="error_following_hashtag_format">Errore provando a seguire #%1$s</string>
     <string name="error_unfollowing_hashtag_format">Errore smettendo di provare a seguire #%1$s</string>
     <string name="status_count_one_plus">1+</string>
@@ -606,12 +602,14 @@
     <string name="pref_summary_http_proxy_missing">&lt;non impostato&gt;</string>
     <string name="pref_summary_http_proxy_invalid">&lt;non valido&gt;</string>
     <string name="pref_reading_order_newest_first">Più nuovi prima</string>
-    <string name="action_post_failed_detail">Non è stato possibile caricare il tuo post ed è stato salvato nelle bozze.
+    <plurals name="action_post_failed_detail">
+        <item quantity="one">Non è stato possibile caricare il tuo post ed è stato salvato nelle bozze.
 \n
-\nNon è stato possibile contattare il server oppure il server ha rifiutato il post.</string>
-    <string name="action_post_failed_detail_plural">Non è stato possibile caricare i tuoi post e sono stati salvati nelle bozze.
+\nNon è stato possibile contattare il server oppure il server ha rifiutato il post.</item>
+        <item quantity="other">Non è stato possibile caricare i tuoi post e sono stati salvati nelle bozze.
 \n
-\nNon è stato possibile contattare il server oppure il server ha rifiutato i post.</string>
+\nNon è stato possibile contattare il server oppure il server ha rifiutato i post.</item>
+    </plurals>
     <string name="action_post_failed_show_drafts">Mostra bozze</string>
     <string name="action_post_failed_do_nothing">Chiudi</string>
     <string name="send_account_username_to">Condividi nome utente dell\'account a…</string>
@@ -624,7 +622,6 @@
     <string name="send_account_link_to">Condividi URL account a…</string>
     <string name="account_username_copied">Nome utente copiato</string>
     <string name="dialog_follow_hashtag_title">Segui hashtag</string>
-    <string name="dialog_follow_hashtag_hint">#hashtag</string>
     <string name="accessibility_talking_about_tag">%1$d persone parlano dell\'hashtag %2$s</string>
     <string name="total_usage">Utilizzo totale</string>
     <string name="total_accounts">Account totali</string>
@@ -632,7 +629,7 @@
     <string name="title_public_trending_hashtags">Hashtag di tendenza</string>
     <string name="help_empty_home">Questa è la tua <b>Timeline principale</b>. Mostra i post più recenti degli account che segui.
 \n
-\nPer esplorare gli account puoi scopririli in una delle altre timeline. Per esempio la timeline locale della tua istanza [iconica gmd_group]. O puoi cercarli per fine [iconica gmd_search]; per esempio cerca “Tusky” per trovare il nostro account Mastodon.</string>
+\nPer esplorare gli account puoi scoprirli in una delle altre timeline. Per esempio la timeline locale della tua istanza [iconica gmd_group]. O puoi cercarli per fine [iconica gmd_search]; per esempio cerca \"Tusky\" per trovare il nostro account Mastodon.</string>
     <string name="notification_unknown_name">Sconosciuto</string>
     <string name="post_media_image">Immagine</string>
     <string name="label_filter_title">Titolo</string>
@@ -692,21 +689,21 @@
     <string name="error_media_upload_sending_fmt">Il caricamento è fallito: %1$s</string>
     <string name="label_image">Immagine</string>
     <string name="app_theme_system_black">Usa design di sistema (nero)</string>
-    <string name="help_empty_conversations">Questi sono i tuoi <b>messaggi privati</b>; a volte sono chiamati conversazioni o messaggi diretti (DM). 
-\n 
-\nI messaggi privati sono creati impostando la visibilità [iconics gmd_public] di un post su [iconics gmd_mail] <i>Privato</i> e menzionando uno o più utenti nel testo. 
-\n 
-\nPer esempio puoi andare su un profilo e creare un messaggio [iconics gmd_edit] e cambiare la visibilità. \u0020</string>
+    <string name="help_empty_conversations">Questi sono i tuoi <b>messaggi privati</b>; a volte sono chiamati conversazioni o messaggi diretti (DM).
+\n
+\nI messaggi privati sono creati impostando la visibilità [iconics gmd_public] di un post su [iconics gmd_mail] <i>Privato</i> e menzionando uno o più utenti nel testo.
+\n
+\nPer esempio puoi andare su un profilo e creare un messaggio [iconics gmd_edit] e cambiare la visibilità.</string>
     <string name="unfollowing_hashtag_success_format">Non segui più l\'hashtag #%1$s</string>
     <string name="unmuting_hashtag_success_format">Riattivazione dell\'hashtag #%1$s</string>
     <string name="action_view_filter">Vedi filtro</string>
     <string name="following_hashtag_success_format">Ora segui l\'hashtag #%1$s</string>
     <string name="muting_hashtag_success_format">Hashtag #%1$s silenziato come avvertimento</string>
-    <string name="help_empty_lists">Questa è la <b>vista delle tue liste</b>. Puoi definire un numero di liste private a cui aggiungere account. 
-\n 
-\nRICORDA che puoi aggiungere alle liste solo account che già segui. 
-\n 
-\nQueste liste possono essere utilizzate come scheda dalle Impostazioni account [iconics gmd_account_circle] [iconics gmd_navigate_next] Schede \u0020</string>
+    <string name="help_empty_lists">Questa è la <b>vista delle tue liste</b>. Puoi definire un numero di liste private a cui aggiungere account.
+\n
+\nRICORDA che puoi aggiungere alle liste solo account che già segui.
+\n
+\nQueste liste possono essere utilizzate come scheda dalle Impostazioni account [iconics gmd_account_circle] [iconics gmd_navigate_next] Schede.</string>
     <string name="title_public_trending_statuses">Post di tendenza</string>
     <string name="error_blocking_domain">Silenziamento di %1$s fallito: %2$s</string>
     <string name="error_unblocking_domain">Riattivazione di %1$s fallito: %2$s</string>
@@ -739,4 +736,35 @@
     <string name="pref_match_default_post_privacy">Stessa privacy predefinita del post</string>
     <string name="post_privacy_direct">Diretto</string>
     <string name="label_expires_after">Scade dopo</string>
+    <string name="notification_policies_filter_dont_follow_description">Fino a che non le approvi manualmente</string>
+    <string name="notification_policies_title">Impostazioni notifiche</string>
+    <string name="notification_policies_filter_out">Gestisci notifiche da…</string>
+    <string name="notification_policies_filter_dont_follow_title">Persone che non segui</string>
+    <string name="notification_policies_filter_not_following_title">Persone che non ti seguono</string>
+    <string name="notification_policies_filter_not_following_description">Incluse persone che ti seguono da meno di 3 giorni</string>
+    <string name="unknown_notification_filter_new_accounts_title">Nuovi account</string>
+    <string name="unknown_notification_filter_new_accounts_description">Creati negli ultimi 30 giorni</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_title">Menzioni private non richieste</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_description">Filtrate a meno che siano in risposta a una loro menzione o se segui il mittente</string>
+    <string name="unknown_notification_filter_moderated_accounts">Account moderati</string>
+    <string name="unknown_notification_filter_moderated_accounts_description">Limitato dai moderatori del server</string>
+    <string name="notification_policies_not_supported">Questa funzione è supportata sui server che usano Mastodon v.4.3.0 o successiva.</string>
+    <string name="filtered_notifications">Notifiche filtrate</string>
+    <string name="notifications_from_people_you_may_know">Notifiche da %1$d persone che potresti conoscere</string>
+    <string name="notification_policy_accept">Accetta</string>
+    <string name="notification_policy_filter">Filtra</string>
+    <string name="notification_policy_ignore">Ignora</string>
+    <string name="filtered_notifications_title">Notifiche filtrate</string>
+    <string name="accept_notification_request">Accetta richieste di notifica</string>
+    <string name="open_settings">Apri preferenze</string>
+    <string name="notifications_from">Notifiche da %1$s</string>
+    <string name="action_accept_notification_request">Accetta</string>
+    <string name="action_dismiss_notification_request">Ignora</string>
+    <string name="dismiss_notification_request">Ignora richiesta di notifica</string>
+    <string name="post_replied_format">In risposta a %1$s</string>
+    <string name="post_replied">Con risposta</string>
+    <string name="post_replied_self">Thread continuato</string>
+    <string name="follow_hashtag_success">Hashtag %1$s seguito</string>
+    <string name="preview_card_by_author">Da %1$s</string>
+    <string name="preview_card_more_by_author">Altro da %1$s</string>
 </resources>

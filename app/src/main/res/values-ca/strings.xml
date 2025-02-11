@@ -98,14 +98,13 @@
     <string name="label_header">Capçalera</string>
     <string name="link_whats_an_instance">Què és una instància?</string>
     <string name="login_connection">S\'està connectant…</string>
-    <string name="dialog_whats_an_instance">Aquí pots introduir l\'adreça o domini de qualsevol instància,
-        com ara mastodont.cat, mastodon.social, icosahedron.website o
-        <a href="https://instances.social">molts més!</a>
-        \n\nSi encara no tens cap copte, pots introduir el nom de la instància on t\'agradaria
-        unir-te i crear un compte allà.\n\nUna instànica és un únic lloc on el teu compte s\'hostatja
-        , però pots comunicar-te fàcilment i seguir amics d\'altres instàncies com si fossiu en el mateix lloc.
-        \n\nTens més informació a <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
+    <string name="dialog_whats_an_instance">Aquí pots introduir l\'adreça o domini de qualsevol instància, \u0020com ara mastodont.cat, mastodon.social, icosahedron.website o \u0020<a href="https://instances.social">molts més!</a> 
+\n
+\nSi encara no tens cap copte, pots introduir el nom de la instància on t\'agradaria \u0020unir-te i crear un compte allà.
+\n
+\nUna instànica és un únic lloc on el teu compte s\'hostatja \u0020, però pots comunicar-te fàcilment i seguir amics d\'altres instàncies com si fossiu en el mateix lloc. 
+\n
+\nTens més informació a <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
     <string name="dialog_title_finishing_media_upload">S\'està finalitzant la pujada de material multimèdia</string>
     <string name="dialog_message_uploading_media">S\'està pujant…</string>
     <string name="dialog_download_image">Baixa</string>
@@ -348,7 +347,7 @@
     <string name="description_visibility_private">Seguidors</string>
     <string name="description_visibility_direct">Directe</string>
     <string name="hint_list_name">Nom de la llista</string>
-    <string name="edit_hashtag_hint">Hashtag sense #</string>
+    <string name="pick_hashtag_hint">Hashtag sense #</string>
     <string name="notifications_clear">Netejar</string>
     <string name="notifications_apply_filter">Filtrar</string>
     <string name="filter_apply">Aplicar</string>
@@ -518,12 +517,14 @@
     <string name="post_edited">S\'ha editat %1$s</string>
     <string name="notification_update_name">Edicions de publicacions</string>
     <string name="action_post_failed">La càrrega ha fallat</string>
-    <string name="action_post_failed_detail">La teva publicació no s\'ha pogut penjar i s\'ha desat als esborranys.
+    <plurals name="action_post_failed_detail">
+        <item quantity="one">La teva publicació no s\'ha pogut penjar i s\'ha desat als esborranys.
 \n
-\nNo s\'ha pogut contactar amb el servidor o bé ha rebutjat la publicació.</string>
-    <string name="action_post_failed_detail_plural">Les teves publicacions no s\'han pogut penjar i s\'han desat als esborranys.
+\nNo s\'ha pogut contactar amb el servidor o bé ha rebutjat la publicació.</item>
+        <item quantity="other">Les teves publicacions no s\'han pogut penjar i s\'han desat als esborranys.
 \n
-\nNo s\'ha pogut contactar amb el servidor o ha rebutjat les publicacions.</string>
+\nNo s\'ha pogut contactar amb el servidor o ha rebutjat les publicacions.</item>
+    </plurals>
     <string name="action_post_failed_show_drafts">Mostra esborranys</string>
     <string name="action_post_failed_do_nothing">Descartar</string>
     <string name="send_account_link_to">Comparteix l\'URL del compte a…</string>
@@ -559,10 +560,8 @@
     <string name="title_followed_hashtags">Hashtags seguits</string>
     <string name="notification_sign_up_description">Notificacions sobre nous usuaris</string>
     <string name="title_login">Iniciar Sessió</string>
-    <string name="title_migration_relogin">Torneu a iniciar sessió per rebre notificacions push</string>
     <string name="a11y_label_loading_thread">S\'està carregant el fil</string>
     <string name="compose_save_draft_loses_media">Guardar l\'esborrany\? (Els fitxers adjunts es tornaran a penjar quan recupereu l\'esborrany.)</string>
-    <string name="dialog_push_notification_migration_other_accounts">Heu tornat a iniciar sessió al vostre compte actual per concedir permís de subscripció push a Tusky. Tanmateix, encara teniu altres comptes que no s\'han migrat d\'aquesta manera. Canvieu-los i torneu a iniciar sessió un per un per activar el suport de notificacions UnifiedPush.</string>
     <string name="instance_rule_info">En iniciar sessió, accepteu les regles de %1$s.</string>
     <string name="action_edit_image">Edita la imatge</string>
     <string name="failed_to_pin">No s\'ha pogut fixar</string>
@@ -604,8 +603,6 @@
 \n Les notificacions push no es veuran afectades, però podeu revisar les vostres preferències de notificació manualment.</string>
     <string name="account_date_joined">S\'ha unit el %1$s</string>
     <string name="saving_draft">Desant l\'esborrany…</string>
-    <string name="dialog_push_notification_migration">Per utilitzar les notificacions push mitjançant UnifiedPush, Tusky necessita permís per subscriure\'s a les notificacions al vostre servidor Mastodon. Això requereix un nou inici de sessió per canviar els àmbits d\'OAuth concedits a Tusky. Si feu servir l\'opció de tornar a iniciar sessió aquí o a les preferències del compte, es conservaran tots els esborranys locals i la memòria cau.</string>
-    <string name="tips_push_notification_migration">Torneu a iniciar sessió a tots els comptes per activar el suport de notificacions push.</string>
     <string name="description_post_edited">Editat</string>
     <string name="status_edit_info">%1$s ha editat</string>
     <string name="action_subscribe_account">Subscriu-te</string>
@@ -618,7 +615,6 @@
     <string name="total_usage">Ús total</string>
     <string name="total_accounts">Total de comptes</string>
     <string name="dialog_follow_hashtag_title">Segueix hashtag</string>
-    <string name="dialog_follow_hashtag_hint">#hashtag</string>
     <string name="action_refresh">Actualitzar</string>
     <string name="notification_unknown_name">Desconegut</string>
     <string name="status_filter_placeholder_label_format">Filtrat: %1$s</string>

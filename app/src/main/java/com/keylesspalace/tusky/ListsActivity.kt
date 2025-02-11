@@ -40,6 +40,8 @@ import com.keylesspalace.tusky.databinding.DialogListBinding
 import com.keylesspalace.tusky.databinding.ItemListBinding
 import com.keylesspalace.tusky.entity.MastoList
 import com.keylesspalace.tusky.util.BindingHolder
+import com.keylesspalace.tusky.util.ensureBottomMargin
+import com.keylesspalace.tusky.util.ensureBottomPadding
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.show
 import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
@@ -77,6 +79,9 @@ class ListsActivity : BaseActivity() {
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
+
+        binding.addListButton.ensureBottomMargin()
+        binding.listsRecycler.ensureBottomPadding(fab = true)
 
         binding.listsRecycler.adapter = adapter
         binding.listsRecycler.layoutManager = LinearLayoutManager(this)
@@ -118,8 +123,13 @@ class ListsActivity : BaseActivity() {
                 selectedReplyPolicyIndex = position
             }
         }
+        val inset = resources.getDimensionPixelSize(R.dimen.dialog_inset)
         val dialog = MaterialAlertDialogBuilder(this)
             .setView(binding.root)
+            .setBackgroundInsetTop(inset)
+            .setBackgroundInsetEnd(inset)
+            .setBackgroundInsetBottom(inset)
+            .setBackgroundInsetStart(inset)
             .setPositiveButton(
                 if (list == null) {
                     R.string.action_create_list
@@ -137,7 +147,10 @@ class ListsActivity : BaseActivity() {
             .setNegativeButton(android.R.string.cancel, null)
             .show()
 
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
+        // yes, SOFT_INPUT_ADJUST_RESIZE is deprecated, but without it the dropdown can get behind the keyboard
+        dialog.window?.setSoftInputMode(
+            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE or WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE
+        )
 
         binding.nameText.let { editText ->
             editText.doOnTextChanged { s, _, _, _ ->
