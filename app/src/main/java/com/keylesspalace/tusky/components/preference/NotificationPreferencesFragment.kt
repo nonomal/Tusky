@@ -16,9 +16,9 @@
 package com.keylesspalace.tusky.components.preference
 
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
+import androidx.lifecycle.lifecycleScope
 import com.keylesspalace.tusky.R
-import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper
+import com.keylesspalace.tusky.components.systemnotifications.NotificationService
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.settings.PrefKeys
@@ -27,12 +27,16 @@ import com.keylesspalace.tusky.settings.preferenceCategory
 import com.keylesspalace.tusky.settings.switchPreference
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class NotificationPreferencesFragment : PreferenceFragmentCompat() {
+class NotificationPreferencesFragment : BasePreferencesFragment() {
 
     @Inject
     lateinit var accountManager: AccountManager
+
+    @Inject
+    lateinit var notificationService: NotificationService
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         val activeAccount = accountManager.activeAccount ?: return
@@ -44,11 +48,11 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                 isIconSpaceReserved = false
                 isChecked = activeAccount.notificationsEnabled
                 setOnPreferenceChangeListener { _, newValue ->
-                    updateAccount { it.notificationsEnabled = newValue as Boolean }
-                    if (NotificationHelper.areNotificationsEnabled(context, accountManager)) {
-                        NotificationHelper.enablePullNotifications(context)
+                    updateAccount { copy(notificationsEnabled = newValue as Boolean) }
+                    if (notificationService.areNotificationsEnabled()) {
+                        notificationService.enablePullNotifications()
                     } else {
-                        NotificationHelper.disablePullNotifications(context)
+                        notificationService.disablePullNotifications()
                     }
                     true
                 }
@@ -64,7 +68,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsFollowed
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsFollowed = newValue as Boolean }
+                        updateAccount { copy(notificationsFollowed = newValue as Boolean) }
                         true
                     }
                 }
@@ -75,7 +79,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsFollowRequested
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsFollowRequested = newValue as Boolean }
+                        updateAccount { copy(notificationsFollowRequested = newValue as Boolean) }
                         true
                     }
                 }
@@ -86,7 +90,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsReblogged
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsReblogged = newValue as Boolean }
+                        updateAccount { copy(notificationsReblogged = newValue as Boolean) }
                         true
                     }
                 }
@@ -97,7 +101,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsFavorited
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsFavorited = newValue as Boolean }
+                        updateAccount { copy(notificationsFavorited = newValue as Boolean) }
                         true
                     }
                 }
@@ -108,7 +112,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsPolls
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsPolls = newValue as Boolean }
+                        updateAccount { copy(notificationsPolls = newValue as Boolean) }
                         true
                     }
                 }
@@ -119,7 +123,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsSubscriptions
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsSubscriptions = newValue as Boolean }
+                        updateAccount { copy(notificationsSubscriptions = newValue as Boolean) }
                         true
                     }
                 }
@@ -130,7 +134,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsSignUps
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsSignUps = newValue as Boolean }
+                        updateAccount { copy(notificationsSignUps = newValue as Boolean) }
                         true
                     }
                 }
@@ -141,7 +145,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsUpdates
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsUpdates = newValue as Boolean }
+                        updateAccount { copy(notificationsUpdates = newValue as Boolean) }
                         true
                     }
                 }
@@ -152,7 +156,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationsReports
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationsReports = newValue as Boolean }
+                        updateAccount { copy(notificationsReports = newValue as Boolean) }
                         true
                     }
                 }
@@ -168,7 +172,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationSound
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationSound = newValue as Boolean }
+                        updateAccount { copy(notificationSound = newValue as Boolean) }
                         true
                     }
                 }
@@ -179,7 +183,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationVibration
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationVibration = newValue as Boolean }
+                        updateAccount { copy(notificationVibration = newValue as Boolean) }
                         true
                     }
                 }
@@ -190,7 +194,7 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
                     isIconSpaceReserved = false
                     isChecked = activeAccount.notificationLight
                     setOnPreferenceChangeListener { _, newValue ->
-                        updateAccount { it.notificationLight = newValue as Boolean }
+                        updateAccount { copy(notificationLight = newValue as Boolean) }
                         true
                     }
                 }
@@ -198,10 +202,11 @@ class NotificationPreferencesFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private inline fun updateAccount(changer: (AccountEntity) -> Unit) {
-        accountManager.activeAccount?.let { account ->
-            changer(account)
-            accountManager.saveAccount(account)
+    private fun updateAccount(changer: AccountEntity.() -> AccountEntity) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            accountManager.activeAccount?.let { account ->
+                accountManager.updateAccount(account, changer)
+            }
         }
     }
 

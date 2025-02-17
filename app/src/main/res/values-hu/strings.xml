@@ -130,12 +130,12 @@
     <string name="label_header">Fejléc</string>
     <string name="link_whats_an_instance">Mi az a példány\?</string>
     <string name="login_connection">Csatlakozás…</string>
-    <string name="dialog_whats_an_instance">Bármely példány címét vagy domain nevét beírhatod ide, mint a mastodon.social, az icosahedron.website, a social.tchncs.de és <a href="https://instances.social">mások!</a> 
-\n 
-\nHa még nincs fiókod, beírhatod annak a példánynak a címét, amelyhez csatlakoznál, majd azon létrehozhatsz egy fiókot. 
-\n 
-\nA példány az a hely, ahol a fiókadataidat tárolják, de ettől még ugyanúgy kommunikálhatsz más példányokon lévő emberekkel, mintha ugyanazon az oldalon lennétek. 
-\n 
+    <string name="dialog_whats_an_instance">Bármely példány címét vagy domain nevét beírhatod ide, mint a mastodon.social, az icosahedron.website, a social.tchncs.de és <a href="https://instances.social">mások!</a> \u0020
+\n \u0020
+\nHa még nincs fiókod, beírhatod annak a példánynak a címét, amelyhez csatlakoznál, majd azon létrehozhatsz egy fiókot. \u0020
+\n \u0020
+\nA példány az a hely, ahol a fiókadataidat tárolják, de ettől még ugyanúgy kommunikálhatsz más példányokon lévő emberekkel, mintha ugyanazon az oldalon lennétek. \u0020
+\n \u0020
 \nTöbb információt találhatsz itt: <a href="https://joinmastodon.org">joinmastodon.org</a>. \u0020</string>
     <string name="dialog_title_finishing_media_upload">Média feltöltés befejezése</string>
     <string name="dialog_message_uploading_media">Feltöltés…</string>
@@ -359,7 +359,7 @@
     <string name="description_visibility_direct">Közvetlen</string>
     <string name="description_poll">Szavazás válaszokkal: %1$s, %2$s, %3$s, %4$s; %5$s</string>
     <string name="hint_list_name">Lista neve</string>
-    <string name="edit_hashtag_hint">Hashtag # nélkül</string>
+    <string name="pick_hashtag_hint">Hashtag # nélkül</string>
     <string name="notifications_clear">Törlés</string>
     <string name="notifications_apply_filter">Szűrés</string>
     <string name="filter_apply">Alkalmaz</string>
@@ -516,17 +516,13 @@
     <string name="notification_update_name">Bejegyzések szerkesztése</string>
     <string name="notification_update_description">Értesítések olyan bejegyzések szerkesztéséről, melyekkel már dolgod volt</string>
     <string name="tusky_compose_post_quicksetting_label">Bejegyzés Létrehozása</string>
-    <string name="title_migration_relogin">Bejelentkezés újra a leküldési értesítések érdekében</string>
     <string name="action_dismiss">Elvetés</string>
     <string name="action_details">Részletek</string>
     <string name="account_date_joined">Csatlakozva %1$s</string>
-    <string name="tips_push_notification_migration">Bejelentkezés újra minden fiókkal a leküldéses értesítések engedélyezése érdekében.</string>
     <string name="title_login">Bejelentkezés</string>
     <string name="status_count_one_plus">1+</string>
     <string name="error_could_not_load_login_page">Nem tudtuk betölteni a bejelentkező oldalt.</string>
     <string name="saving_draft">Vázlat mentése…</string>
-    <string name="dialog_push_notification_migration">Ahhoz, hogy a UnifiedPush szolgáltatás révén leküldéses értesítéseket használhass, a Tuskynak fel kell iratkoznia az értesítésekre a Mastodon-kiszolgálódon. Ehhez új bejelentkezésre van szükség, hogy a Tusky számára kiosztott OAuth jogosultságok megváltozzanak. Az újbóli bejelentkezés funkció használata (itt vagy a fiókbeállításokban) megőrzi a helyi piszkozataidat és a gyorsítótár tartalmát.</string>
-    <string name="dialog_push_notification_migration_other_accounts">Újra bejelentkeztél a fiókodba, hogy feliratkoztasd a Tuskyt a leküldéses értesítések használatára. Ugyanakkor vannak még fiókjaid, melyek még nem lettek így átköltöztetve. Válts át rájuk, és jelentkezz be újra mindegyikben, hogy ezekben is engedélyezd a UnifiedPush értesítések támogatását.</string>
     <string name="action_edit_image">Kép szerkesztése</string>
     <string name="error_image_edit_failed">A kép nem szerkeszthető.</string>
     <string name="error_loading_account_details">Nem sikerült betölteni a fiókadatokat</string>
@@ -597,12 +593,14 @@
     <string name="send_account_username_to">Fiók felhasználói nevének megosztása vele…</string>
     <string name="account_username_copied">Felhasználónév másolva</string>
     <string name="action_post_failed">Feltöltés meghiúsult</string>
-    <string name="action_post_failed_detail">A bejegyzésed feltöltése meghiúsult, és a vázlatokba mentettük el.
+    <plurals name="action_post_failed_detail">
+        <item quantity="one">A bejegyzésed feltöltése meghiúsult, és a vázlatokba mentettük el.
 \n
-\nVagy a kiszolgálót nem lehetett elérni, vagy visszautasította a bejegyzést.</string>
-    <string name="action_post_failed_detail_plural">A bejegyzésed feltöltése meghiúsult, és a vázlatokba mentettük el.
+\nVagy a kiszolgálót nem lehetett elérni, vagy visszautasította a bejegyzést.</item>
+        <item quantity="other">A bejegyzésed feltöltése meghiúsult, és a vázlatokba mentettük el.
 \n
-\nVagy a kiszolgálót nem lehetett elérni, vagy visszautasította a bejegyzést.</string>
+\nVagy a kiszolgálót nem lehetett elérni, vagy visszautasította a bejegyzést.</item>
+    </plurals>
     <string name="action_post_failed_show_drafts">Vázlatok megjelenítése</string>
     <string name="action_post_failed_do_nothing">Elvetés</string>
     <string name="action_browser_login">Bejelentkezés Böngészővel</string>
@@ -613,7 +611,6 @@
     <string name="total_usage">Összes használat</string>
     <string name="total_accounts">Összes fiók</string>
     <string name="dialog_follow_hashtag_title">Hashtag követése</string>
-    <string name="dialog_follow_hashtag_hint">#hashtag</string>
     <string name="action_refresh">Frissítés</string>
     <string name="notification_unknown_name">Ismeretlen</string>
     <string name="ui_error_favourite">Bejegyzés kedvencnek jelölése sikertelen: %1$s</string>
@@ -645,8 +642,8 @@
     <string name="filter_keyword_addition_title">Kulcsszó hozzáadása</string>
     <string name="filter_edit_keyword_title">Kulcsszó szerkesztése</string>
     <string name="filter_description_format">%1$s: %2$s</string>
-    <string name="help_empty_home">Ez a <b>kezdőlapod idővonala</b>. Megjeleníti a követett fiókok legfrissebb bejegyzéseit. 
-\n 
+    <string name="help_empty_home">Ez a <b>kezdőlapod idővonala</b>. Megjeleníti a követett fiókok legfrissebb bejegyzéseit. \u0020
+\n \u0020
 \nMás fiókokat más idővonalakon fedezhetsz fel. Például a példányod helyi idővonalán [iconics gmd_group]. Vagy megkeresheted őket név szerint [iconics gmd_search]; például keress rá a Tuskyra, hogy megtaláld a Mastodon-fiókunkat.</string>
     <string name="post_media_image">Kép</string>
     <string name="select_list_manage">Listák kezelése</string>
@@ -688,16 +685,16 @@
     <string name="unmuting_hashtag_success_format">#%1$s hashtag némításának feloldása</string>
     <string name="muting_hashtag_success_format">#%1$s hashtag elnémítása figyelmeztetésként</string>
     <string name="unfollowing_hashtag_success_format">Már nem követed a(z) #%1$s hashtaget</string>
-    <string name="help_empty_conversations">It találhatóak a <b>privát üzeneteid</b>; melyeket néha beszélgetéseknek vagy közvetlen üzeneteknek hívunk (DM). 
-\n 
-\nPrivát üzeneteket az ilyen bejegyzések láthatóságának [iconics gmd_public] publikusról [iconics gmd_mail] <i>közvetlenre</i> állításával, és egy vagy több felhasználó megemlítésével hozhatsz létre. 
-\n 
+    <string name="help_empty_conversations">It találhatóak a <b>privát üzeneteid</b>; melyeket néha beszélgetéseknek vagy közvetlen üzeneteknek hívunk (DM). \u0020
+\n \u0020
+\nPrivát üzeneteket az ilyen bejegyzések láthatóságának [iconics gmd_public] publikusról [iconics gmd_mail] <i>közvetlenre</i> állításával, és egy vagy több felhasználó megemlítésével hozhatsz létre. \u0020
+\n \u0020
 \nPéldául indulhatsz egy profilról, a létrehozás gombra kattintva [iconics gmd_edit], majd a láthatóságot megváltoztatva. \u0020</string>
     <string name="title_public_trending_statuses">Felkapott bejegyzések</string>
-    <string name="help_empty_lists">Ez a <b>listanézeted</b>. Privát listákat hozhatsz létre és fiókokat adhatsz hozzájuk. 
-\n 
-\nMEGJEGYZÉS: Csak olyan fiókot rakhatsz a listádra, melyet követsz is. 
-\n 
+    <string name="help_empty_lists">Ez a <b>listanézeted</b>. Privát listákat hozhatsz létre és fiókokat adhatsz hozzájuk. \u0020
+\n \u0020
+\nMEGJEGYZÉS: Csak olyan fiókot rakhatsz a listádra, melyet követsz is. \u0020
+\n \u0020
 \n Ezeket a listákat lapokként használhatod a Fiókbeállítások [iconics gmd_account_circle] [iconics gmd_navigate_next] Lapok alatt. \u0020</string>
     <string name="error_blocking_domain">Nem sikerült némítani %1$s: %2$s</string>
     <string name="error_unblocking_domain">Nem sikerült a némítás feloldása %1$s: %2$s</string>
@@ -710,7 +707,6 @@
     <string name="pref_title_show_self_boosts">Önmegtolások megjelenítése</string>
     <string name="pref_title_show_self_boosts_description">Valaki a saját bejegyzését tolja meg</string>
     <string name="pref_title_show_notifications_filter">Értesítésszűrő megjelenítése</string>
-
     <string name="action_follow_hashtag">Új hashtag követése</string>
     <string name="url_copied">Webcím másolva</string>
     <string name="dialog_follow_warning">Követed ezt a fiókot?</string>

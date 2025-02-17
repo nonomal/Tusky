@@ -18,38 +18,33 @@ package com.keylesspalace.tusky
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
-import android.widget.FrameLayout
+import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.view.updatePadding
-import androidx.core.widget.doOnTextChanged
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionManager
-import at.connyduck.sparkbutton.helpers.Utils
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialArcMotion
 import com.google.android.material.transition.MaterialContainerTransform
 import com.keylesspalace.tusky.adapter.ItemInteractionListener
 import com.keylesspalace.tusky.adapter.TabAdapter
 import com.keylesspalace.tusky.appstore.EventHub
-import com.keylesspalace.tusky.appstore.MainTabsChangedEvent
 import com.keylesspalace.tusky.components.account.list.ListSelectionFragment
 import com.keylesspalace.tusky.databinding.ActivityTabPreferenceBinding
 import com.keylesspalace.tusky.entity.MastoList
 import com.keylesspalace.tusky.network.MastodonApi
+import com.keylesspalace.tusky.util.ensureBottomPadding
 import com.keylesspalace.tusky.util.unsafeLazy
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
+import com.keylesspalace.tusky.view.showHashtagPickerDialog
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.regex.Pattern
 import javax.inject.Inject
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -68,14 +63,8 @@ class TabPreferenceActivity : BaseActivity(), ItemInteractionListener, ListSelec
     private lateinit var touchHelper: ItemTouchHelper
     private lateinit var addTabAdapter: TabAdapter
 
-    private var tabsChanged = false
-
     private val selectedItemElevation by unsafeLazy {
         resources.getDimension(R.dimen.selected_drag_item_elevation)
-    }
-
-    private val hashtagRegex by unsafeLazy {
-        Pattern.compile("([\\w_]*[\\p{Alpha}_][\\w_]*)", Pattern.CASE_INSENSITIVE)
     }
 
     private val onFabDismissedCallback = object : OnBackPressedCallback(false) {
@@ -95,6 +84,19 @@ class TabPreferenceActivity : BaseActivity(), ItemInteractionListener, ListSelec
             setTitle(R.string.title_tab_preferences)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+        }
+
+        binding.currentTabsRecyclerView.ensureBottomPadding(fab = true)
+        ViewCompat.setOnApplyWindowInsetsListener(binding.actionButton) { _, insets ->
+            val bottomInset = insets.getInsets(systemBars()).bottom
+            val actionButtonMargin = resources.getDimensionPixelSize(R.dimen.fabMargin)
+            binding.actionButton.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = bottomInset + actionButtonMargin
+            }
+            binding.sheet.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = bottomInset + actionButtonMargin
+            }
+            insets.inset(0, 0, 0, bottomInset)
         }
 
         currentTabs = accountManager.activeAccount?.tabPreferences.orEmpty().toMutableList()
@@ -231,45 +233,21 @@ class TabPreferenceActivity : BaseActivity(), ItemInteractionListener, ListSelec
     }
 
     private fun showAddHashtagDialog(tab: TabData? = null, tabPosition: Int = 0) {
-        val frameLayout = FrameLayout(this)
-        val padding = Utils.dpToPx(this, 8)
-        frameLayout.updatePadding(left = padding, right = padding)
+        showHashtagPickerDialog(mastodonApi, R.string.add_hashtag_title) { hashtag ->
+            if (tab == null) {
+                val newTab = createTabDataFromId(HASHTAG, listOf(hashtag))
+                currentTabs.add(newTab)
+                currentTabsAdapter.notifyItemInserted(currentTabs.size - 1)
+            } else {
+                val newTab = tab.copy(arguments = tab.arguments + hashtag)
+                currentTabs[tabPosition] = newTab
 
-        val editText = AppCompatEditText(this)
-        editText.setHint(R.string.edit_hashtag_hint)
-        editText.setText("")
-        frameLayout.addView(editText)
-
-        val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.add_hashtag_title)
-            .setView(frameLayout)
-            .setNegativeButton(android.R.string.cancel, null)
-            .setPositiveButton(R.string.action_save) { _, _ ->
-                val input = editText.text.toString().trim()
-                if (tab == null) {
-                    val newTab = createTabDataFromId(HASHTAG, listOf(input))
-                    currentTabs.add(newTab)
-                    currentTabsAdapter.notifyItemInserted(currentTabs.size - 1)
-                } else {
-                    val newTab = tab.copy(arguments = tab.arguments + input)
-                    currentTabs[tabPosition] = newTab
-
-                    currentTabsAdapter.notifyItemChanged(tabPosition)
-                }
-
-                updateAvailableTabs()
-                saveTabs()
+                currentTabsAdapter.notifyItemChanged(tabPosition)
             }
-            .create()
 
-        editText.doOnTextChanged { s, _, _, _ ->
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = validateHashtag(s)
+            updateAvailableTabs()
+            saveTabs()
         }
-
-        dialog.show()
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = validateHashtag(editText.text)
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-        editText.requestFocus()
     }
 
     private var listSelectDialog: ListSelectionFragment? = null
@@ -290,11 +268,6 @@ class TabPreferenceActivity : BaseActivity(), ItemInteractionListener, ListSelec
         currentTabsAdapter.notifyItemInserted(currentTabs.size - 1)
         updateAvailableTabs()
         saveTabs()
-    }
-
-    private fun validateHashtag(input: CharSequence?): Boolean {
-        val trimmedInput = input?.trim() ?: ""
-        return trimmedInput.isNotEmpty() && hashtagRegex.matcher(trimmedInput).matches()
     }
 
     private fun updateAvailableTabs() {
@@ -350,19 +323,8 @@ class TabPreferenceActivity : BaseActivity(), ItemInteractionListener, ListSelec
 
     private fun saveTabs() {
         accountManager.activeAccount?.let {
-            lifecycleScope.launch(Dispatchers.IO) {
-                it.tabPreferences = currentTabs
-                accountManager.saveAccount(it)
-            }
-        }
-        tabsChanged = true
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (tabsChanged) {
             lifecycleScope.launch {
-                eventHub.dispatch(MainTabsChangedEvent(currentTabs))
+                accountManager.updateAccount(it) { copy(tabPreferences = currentTabs) }
             }
         }
     }

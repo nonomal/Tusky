@@ -22,15 +22,15 @@ final def CUSTOM_INSTANCE = ""
 final def SUPPORT_ACCOUNT_URL = "https://mastodon.social/@Tusky"
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace "com.keylesspalace.tusky"
     defaultConfig {
         applicationId APP_ID
         namespace "com.keylesspalace.tusky"
         minSdk 24
-        targetSdk 34
-        versionCode 125
-        versionName "26.2"
+        targetSdk 35
+        versionCode 129
+        versionName "27.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
@@ -93,7 +93,9 @@ android {
         }
     }
     sourceSets {
-        androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+        // workaround to have migrations available in unit tests
+        // https://github.com/robolectric/robolectric/issues/3928#issuecomment-395309991
+        debug.assets.srcDirs += files("$projectDir/schemas".toString())
     }
 
     // Exclude unneeded files added by libraries
@@ -183,12 +185,8 @@ dependencies {
     testImplementation libs.bundles.mockito
     testImplementation libs.mockwebserver
     testImplementation libs.androidx.core.testing
+    testImplementation libs.androidx.room.testing
     testImplementation libs.kotlinx.coroutines.test
     testImplementation libs.androidx.work.testing
-    testImplementation libs.truth
     testImplementation libs.turbine
-
-    androidTestImplementation libs.espresso.core
-    androidTestImplementation libs.androidx.room.testing
-    androidTestImplementation libs.androidx.test.junit
 }

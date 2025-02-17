@@ -21,6 +21,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.TextWatcher
@@ -40,8 +41,8 @@ import androidx.core.graphics.ColorUtils
 import androidx.core.view.MenuProvider
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
+import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
@@ -83,6 +84,7 @@ import com.keylesspalace.tusky.util.Loading
 import com.keylesspalace.tusky.util.Success
 import com.keylesspalace.tusky.util.copyToClipboard
 import com.keylesspalace.tusky.util.emojify
+import com.keylesspalace.tusky.util.ensureBottomMargin
 import com.keylesspalace.tusky.util.getDomain
 import com.keylesspalace.tusky.util.hide
 import com.keylesspalace.tusky.util.loadAvatar
@@ -94,10 +96,6 @@ import com.keylesspalace.tusky.util.startActivityWithSlideInAnimation
 import com.keylesspalace.tusky.util.viewBinding
 import com.keylesspalace.tusky.util.visible
 import com.keylesspalace.tusky.view.showMuteAccountDialog
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import com.mikepenz.iconics.utils.colorInt
-import com.mikepenz.iconics.utils.sizeDp
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.NumberFormat
 import java.text.ParseException
@@ -289,25 +287,21 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
     }
 
     private fun handleWindowInsets() {
+        binding.accountFloatingActionButton.ensureBottomMargin()
         ViewCompat.setOnApplyWindowInsetsListener(binding.accountCoordinatorLayout) { _, insets ->
-            val top = insets.getInsets(systemBars()).top
-            val toolbarParams = binding.accountToolbar.layoutParams as ViewGroup.MarginLayoutParams
-            toolbarParams.topMargin = top
+            val systemBarInsets = insets.getInsets(systemBars())
+            val top = systemBarInsets.top
 
-            val right = insets.getInsets(systemBars()).right
-            val bottom = insets.getInsets(systemBars()).bottom
-            val left = insets.getInsets(systemBars()).left
-            binding.accountCoordinatorLayout.updatePadding(
-                right = right,
-                bottom = bottom,
-                left = left
-            )
+            binding.accountToolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = top
+            }
+
             binding.swipeToRefreshLayout.setProgressViewEndTarget(
                 false,
                 top + resources.getDimensionPixelSize(R.dimen.account_swiperefresh_distance)
             )
 
-            WindowInsetsCompat.CONSUMED
+            insets.inset(0, top, 0, 0)
         }
     }
 
@@ -359,7 +353,10 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
                     1f
                 )
 
-                window.statusBarColor = argbEvaluator.evaluate(transparencyPercent, statusBarColorTransparent, statusBarColorOpaque) as Int
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+                    @Suppress("DEPRECATION")
+                    window.statusBarColor = argbEvaluator.evaluate(transparencyPercent, statusBarColorTransparent, statusBarColorOpaque) as Int
+                }
 
                 val evaluatedToolbarColor = argbEvaluator.evaluate(
                     transparencyPercent,
@@ -368,6 +365,7 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
                 ) as Int
 
                 binding.accountToolbar.setBackgroundColor(evaluatedToolbarColor)
+                binding.accountStatusBarScrim.setBackgroundColor(evaluatedToolbarColor)
 
                 binding.swipeToRefreshLayout.isEnabled = verticalOffset == 0
             }
@@ -376,7 +374,10 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
 
     private fun makeNotificationBarTransparent() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        window.statusBarColor = statusBarColorTransparent
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.VANILLA_ICE_CREAM) {
+            @Suppress("DEPRECATION")
+            window.statusBarColor = statusBarColorTransparent
+        }
     }
 
     /**
@@ -853,13 +854,6 @@ class AccountActivity : BottomSheetActivity(), ActionButtonActivity, MenuProvide
 
         if (!viewModel.isSelf && followState != FollowState.FOLLOWING) {
             menu.removeItem(R.id.action_add_or_remove_from_list)
-        }
-
-        menu.findItem(R.id.action_search)?.apply {
-            icon = IconicsDrawable(this@AccountActivity, GoogleMaterial.Icon.gmd_search).apply {
-                sizeDp = 20
-                colorInt = MaterialColors.getColor(binding.collapsingToolbar, android.R.attr.textColorPrimary)
-            }
         }
     }
 

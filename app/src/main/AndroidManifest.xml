@@ -41,6 +41,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
+            android:alwaysRetainTaskState="true"
+            android:maxRecents="1"
             android:theme="@style/SplashTheme">
 
             <intent-filter>
@@ -105,7 +107,7 @@
         <activity
             android:name=".components.compose.ComposeActivity"
             android:theme="@style/TuskyDialogActivityTheme"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+            android:alwaysRetainTaskState="true" />
         <activity
             android:name=".components.viewthread.ViewThreadActivity"
             android:configChanges="orientation|screenSize" />
@@ -114,7 +116,7 @@
             android:theme="@style/TuskyBaseTheme"
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout|smallestScreenSize" />
         <activity android:name=".components.account.AccountActivity" />
-        <activity android:name=".EditProfileActivity" />
+        <activity android:name=".EditProfileActivity"/>
         <activity android:name=".components.preference.PreferencesActivity" />
         <activity android:name=".StatusListActivity" />
         <activity android:name=".components.accountlist.AccountListActivity" />
@@ -149,6 +151,9 @@
         <activity android:name=".components.drafts.DraftsActivity" />
         <activity android:name="com.keylesspalace.tusky.components.filters.EditFilterActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".components.preference.notificationpolicies.NotificationPoliciesActivity"/>
+        <activity android:name=".components.notifications.requests.NotificationRequestsActivity"/>
+        <activity android:name=".components.notifications.requests.details.NotificationRequestDetailsActivity"/>
 
         <receiver
             android:name=".receiver.SendStatusBroadcastReceiver"

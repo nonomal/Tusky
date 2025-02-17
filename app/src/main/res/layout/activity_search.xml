@@ -9,8 +9,10 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
         app:layout_collapseMode="pin"
-        app:liftOnScroll="false">
+        app:liftOnScroll="false"
+        app:statusBarForeground="?attr/colorSurface">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -26,6 +28,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabGravity="fill"
+            app:tabIndicator="@drawable/tab_indicator_top"
+            app:tabIndicatorFullWidth="true"
             app:tabMaxWidth="0dp"
             app:tabMode="fixed" />
 

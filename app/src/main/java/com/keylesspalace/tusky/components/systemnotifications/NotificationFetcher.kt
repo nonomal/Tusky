@@ -1,12 +1,9 @@
 package com.keylesspalace.tusky.components.systemnotifications
 
-import android.app.NotificationManager
-import android.content.Context
 import android.util.Log
 import androidx.annotation.WorkerThread
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.NewNotificationsEvent
-import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper.filterNotification
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.db.entity.AccountEntity
 import com.keylesspalace.tusky.entity.Marker
@@ -14,11 +11,7 @@ import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.HttpHeaderLink
 import com.keylesspalace.tusky.util.isLessThan
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
-import kotlin.math.min
-import kotlin.time.Duration.Companion.milliseconds
-import kotlinx.coroutines.delay
 
 /** Models next/prev links from the "Links" header in an API response */
 data class Links(val next: String?, val prev: String?) {
@@ -49,93 +42,22 @@ data class Links(val next: String?, val prev: String?) {
 class NotificationFetcher @Inject constructor(
     private val mastodonApi: MastodonApi,
     private val accountManager: AccountManager,
-    @ApplicationContext private val context: Context,
-    private val eventHub: EventHub
+    private val eventHub: EventHub,
+    private val notificationService: NotificationService,
 ) {
     suspend fun fetchAndShow() {
-        for (account in accountManager.getAllAccountsOrderedByActive()) {
+        for (account in accountManager.accounts) {
             if (account.notificationsEnabled) {
                 try {
-                    val notificationManager = context.getSystemService(
-                        Context.NOTIFICATION_SERVICE
-                    ) as NotificationManager
-
-                    // Create sorted list of new notifications
                     val notifications = fetchNewNotifications(account)
-                        .filter { filterNotification(notificationManager, account, it) }
+                        .filter { notificationService.filterNotification(account, it.type) }
                         .sortedWith(
                             compareBy({ it.id.length }, { it.id })
                         ) // oldest notifications first
-                        .toMutableList()
 
-                    // TODO do this before filter above? But one could argue that (for example) a tab badge is also a notification
-                    //   (and should therefore adhere to the notification config).
                     eventHub.dispatch(NewNotificationsEvent(account.accountId, notifications))
 
-                    // There's a maximum limit on the number of notifications an Android app
-                    // can display. If the total number of notifications (current notifications,
-                    // plus new ones) exceeds this then some newer notifications will be dropped.
-                    //
-                    // Err on the side of removing *older* notifications to make room for newer
-                    // notifications.
-                    val currentAndroidNotifications = notificationManager.activeNotifications
-                        .sortedWith(
-                            compareBy({ it.tag.length }, { it.tag })
-                        ) // oldest notifications first
-
-                    // Check to see if any notifications need to be removed
-                    val toRemove = currentAndroidNotifications.size + notifications.size - MAX_NOTIFICATIONS
-                    if (toRemove > 0) {
-                        // Prefer to cancel old notifications first
-                        currentAndroidNotifications.subList(
-                            0,
-                            min(toRemove, currentAndroidNotifications.size)
-                        )
-                            .forEach { notificationManager.cancel(it.tag, it.id) }
-
-                        // Still got notifications to remove? Trim the list of new notifications,
-                        // starting with the oldest.
-                        while (notifications.size > MAX_NOTIFICATIONS) {
-                            notifications.removeAt(0)
-                        }
-                    }
-
-                    val notificationsByType = notifications.groupBy { it.type }
-
-                    // Make and send the new notifications
-                    // TODO: Use the batch notification API available in NotificationManagerCompat
-                    // 1.11 and up (https://developer.android.com/jetpack/androidx/releases/core#1.11.0-alpha01)
-                    // when it is released.
-
-                    notificationsByType.forEach { notificationsGroup ->
-                        notificationsGroup.value.forEach { notification ->
-                            val androidNotification = NotificationHelper.make(
-                                context,
-                                notificationManager,
-                                notification,
-                                account,
-                                notificationsGroup.value.size == 1
-                            )
-                            notificationManager.notify(
-                                notification.id,
-                                account.id.toInt(),
-                                androidNotification
-                            )
-
-                            // Android will rate limit / drop notifications if they're posted too
-                            // quickly. There is no indication to the user that this happened.
-                            // See https://github.com/tuskyapp/Tusky/pull/3626#discussion_r1192963664
-                            delay(1000.milliseconds)
-                        }
-                    }
-
-                    NotificationHelper.updateSummaryNotifications(
-                        context,
-                        notificationManager,
-                        account
-                    )
-
-                    accountManager.saveAccount(account)
+                    notificationService.show(account, notifications)
                 } catch (e: Exception) {
                     Log.e(TAG, "Error while fetching notifications", e)
                 }
@@ -169,7 +91,7 @@ class NotificationFetcher @Inject constructor(
         // - The Mastodon marker API (if the server supports it)
         // - account.notificationMarkerId
         // - account.lastNotificationId
-        Log.d(TAG, "getting notification marker for ${account.fullName}")
+        Log.d(TAG, "Getting notification marker for ${account.fullName}.")
         val remoteMarkerId = fetchMarker(authHeader, account)?.lastReadId ?: "0"
         val localMarkerId = account.notificationMarkerId
         val markerId = if (remoteMarkerId.isLessThan(
@@ -187,10 +109,10 @@ class NotificationFetcher @Inject constructor(
         Log.d(TAG, "  localMarkerId: $localMarkerId")
         Log.d(TAG, "  readingPosition: $readingPosition")
 
-        Log.d(TAG, "getting Notifications for ${account.fullName}, min_id: $minId")
+        Log.d(TAG, "Getting Notifications for ${account.fullName}, min_id: $minId.")
 
         // Fetch all outstanding notifications
-        val notifications = buildList {
+        val notifications: List<Notification> = buildList {
             while (minId != null) {
                 val response = mastodonApi.notificationsWithAuth(
                     authHeader,
@@ -221,9 +143,10 @@ class NotificationFetcher @Inject constructor(
                 domain = account.domain,
                 notificationsLastReadId = newMarkerId
             )
-            account.notificationMarkerId = newMarkerId
-            accountManager.saveAccount(account)
+            accountManager.updateAccount(account) { copy(notificationMarkerId = newMarkerId) }
         }
+
+        Log.d(TAG, "Got ${notifications.size} Notifications.")
 
         return notifications
     }
@@ -246,12 +169,5 @@ class NotificationFetcher @Inject constructor(
 
     companion object {
         private const val TAG = "NotificationFetcher"
-
-        // There's a system limit on the maximum number of notifications an app
-        // can show, NotificationManagerService.MAX_PACKAGE_NOTIFICATIONS. Unfortunately
-        // that's not available to client code or via the NotificationManager API.
-        // The current value in the Android source code is 50, set 40 here to both
-        // be conservative, and allow some headroom for summary notifications.
-        private const val MAX_NOTIFICATIONS = 40
     }
 }

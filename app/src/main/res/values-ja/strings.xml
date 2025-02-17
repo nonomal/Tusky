@@ -127,12 +127,12 @@
     <string name="label_header">ヘッダー</string>
     <string name="link_whats_an_instance">インスタンスとは？</string>
     <string name="login_connection">接続中…</string>
-    <string name="dialog_whats_an_instance">mastodon.social, icosahedron.website, social.tchncs.deや<a href="https://instances.social">その他</a> のような、あらゆるインスタンスのアドレスやドメインを入力できます。
-\n
-\nまだアカウントをお持ちでない場合は、参加したいインスタンスの名前を入力することで そのインスタンスにアカウントを作成できます。
-\n
-\nインスタンスはあなたのアカウントが提供される単独の場所ですが、他のインスタンスのユーザーとあたかも同じ場所にいるように簡単にコミュニケーションをとったりフォローしたりできます。
-\n
+    <string name="dialog_whats_an_instance">mastodon.social, icosahedron.website, social.tchncs.deや<a href="https://instances.social">その他</a> のような、あらゆるインスタンスのアドレスやドメインを入力できます。 
+\n 
+\nまだアカウントをお持ちでない場合は、参加したいインスタンスの名前を入力することで そのインスタンスにアカウントを作成できます。 
+\n 
+\nインスタンスはあなたのアカウントが提供される単独の場所ですが、他のインスタンスのユーザーとあたかも同じ場所にいるように簡単にコミュニケーションをとったりフォローしたりできます。 
+\n 
 \nさらに詳しい情報は<a href="https://joinmastodon.org">joinmastodon.org</a>でご覧いただけます。 </string>
     <string name="dialog_title_finishing_media_upload">メディアをアップロードしています</string>
     <string name="dialog_message_uploading_media">アップロード中…</string>
@@ -432,7 +432,7 @@
     <string name="pref_title_enable_swipe_for_tabs">タブ間の切り替えにスワイプのジェスチャーを有効化</string>
     <string name="pref_title_show_cards_in_timelines">リンクのプレビューをタイムラインに表示</string>
     <string name="pref_title_confirm_reblogs">ブーストする前に確認を表示</string>
-    <string name="edit_hashtag_hint">ハッシュタグ (#をつけない)</string>
+    <string name="pick_hashtag_hint">ハッシュタグ (#をつけない)</string>
     <string name="select_list_title">リストを選択</string>
     <string name="poll_info_format"> <!-- 15 votes • 1 hour left --> %1$s • %2$s</string>
     <string name="poll_info_time_absolute">%1$sに終了</string>
@@ -495,7 +495,6 @@
     <string name="error_following_hashtags_unsupported">このインスタンスはハッシュタグのフォローに対応していません。</string>
     <string name="title_followed_hashtags">フォローしたハッシュタグ</string>
     <string name="confirmation_domain_unmuted">%1$s のミュートが解除されました</string>
-    <string name="dialog_push_notification_migration_other_accounts">プッシュ通知の購読許可を Tusky に与えるための現在のアカウントへの再ログインが完了しました。しかし、まだ他のアカウントはマイグレーションができていません。UnifiedPush 通知ｗ有効にするには、他のアカウントにも切り替えて、それぞれ再ログインをしてください。</string>
     <string name="action_unfollow_hashtag_format">#%1$s をフォロー解除しますか？</string>
     <string name="notification_sign_up_description">新規ユーザーに関する通知</string>
     <string name="notification_update_name">投稿の編集</string>
@@ -543,14 +542,11 @@
 \n プッシュ通知には影響ありませんが、通知設定は手動で確認できます。</string>
     <string name="review_notifications">通知の確認</string>
     <string name="action_unsubscribe_account">購読の解除</string>
-    <string name="tips_push_notification_migration">プッシュ通知のサポートを有効にするにはすべてのアカウントで再ログインしてください。</string>
     <string name="report_category_violation">ルール違反</string>
     <string name="report_category_spam">スパム</string>
     <string name="report_category_other">その他</string>
     <string name="tusky_compose_post_quicksetting_label">投稿する</string>
-    <string name="dialog_push_notification_migration">UnifiedPush 経由でプッシュ通知を使用するには、Tusky に Mastodon サーバー上での購読許可が必要です。そのため、Tusky に与えられた OAuth スコープを変更するための再ログインが必要になります。ここかアカウント設定で再ログインのオプションを選んでも、ローカルの下書きとキャッシュは保存されます。</string>
     <string name="error_following_hashtag_format">#%1$s のフォローエラー</string>
-    <string name="title_migration_relogin">プッシュ通知受け取るには再ログインしてください</string>
     <string name="error_unfollowing_hashtag_format">#%1$s のフォロー解除エラー</string>
     <string name="error_could_not_load_login_page">ログインページが読み込めませんでした。</string>
     <string name="error_loading_account_details">アカウントの詳細情報の読み込みに失敗しました</string>
@@ -588,19 +584,17 @@
     <string name="notification_update_description">やり取りした投稿が編集されたときの通知</string>
     <string name="pref_title_http_proxy_port_message">ポートは %1$d から %2$d の間でなければなりません</string>
     <string name="action_post_failed">アップロードに失敗しました</string>
-    <string name="action_post_failed_detail">アップロードに失敗した投稿は下書きに保存されました。
+    <plurals name="action_post_failed_detail">
+        <item quantity="other">アップロードに失敗した投稿は下書きに保存されました。
 \n
-\nサーバーと接続できなかったか、投稿が拒否されました。</string>
+\nサーバーと接続できなかったか、投稿が拒否されました。</item>
+    </plurals>
     <string name="action_post_failed_show_drafts">下書きを表示</string>
     <string name="action_post_failed_do_nothing">閉じる</string>
     <string name="action_browser_login">ブラウザでログイン</string>
     <string name="description_login">ほとんどの場合に動作します。他のアプリにはデータが漏洩しません。</string>
     <string name="description_browser_login">追加の認証方法がサポートされる可能性がありますが、対応ブラウザが必要です。</string>
-    <string name="action_post_failed_detail_plural">アップロードに失敗した投稿は下書きに保存されました。
-\n
-\nサーバーと接続できなかったか、投稿が拒否されました。</string>
     <string name="dialog_follow_hashtag_title">ハッシュタグをフォロー</string>
-    <string name="dialog_follow_hashtag_hint">#ハッシュタグ</string>
     <string name="post_media_image">画像</string>
     <string name="notification_unknown_name">不明</string>
     <string name="select_list_manage">リストを管理する</string>

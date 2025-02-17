@@ -114,13 +114,13 @@
     <string name="label_header">سرایند</string>
     <string name="link_whats_an_instance">نمونه چیست؟</string>
     <string name="login_connection">در حال وصل شدن…</string>
-    <string name="dialog_whats_an_instance">نشانی یا دامنهٔ هر نمونه‌ای می‌تواند وارد شود، چون mastodon.social, icosahedron.website, social.tchncs.de و <a href="https://instances.social">بیش‌تر!</a>. 
-\n \u0020
-\n اگر هنوز حسابی ندارید، می‌توانید نام نمونه‌ای که می‌خواهید به آن بپیوندید را وارد کرده و در آن‌جا حسابی بسازید. 
-\n \u0020
-\n نمونه جاییست که حسابتان رویش میزبانی می‌شود. به راحتی می‌توانید با افراد روی نمونه‌های دیگر ارتباط داشته و دنبالشان کنید؛ انگار که روی یک پایگاه باشید. 
-\n \u0020
-\nاطّلاعات بیش‌تر می‌تواند در <a href="https://joinmastodon.org">joinmastodon.org</a> پیدا شود. \u0020</string>
+    <string name="dialog_whats_an_instance">نشانی یا دامنهٔ هر نمونه‌ای می‌تواند وارد شود، چون mastodon.social, icosahedron.website, social.tchncs.de و <a href="https://instances.social">بیش‌تر!</a>.
+\n
+\nاگر هنوز حسابی ندارید، می‌توانید نام نمونه‌ای که می‌خواهید به آن بپیوندید را وارد کرده و در آن‌جا حسابی بسازید.
+\n
+\nنمونه جاییست که حسابتان رویش میزبانی می‌شود. به راحتی می‌توانید با افراد روی نمونه‌های دیگر ارتباط داشته و دنبالشان کنید؛ انگار که روی یک پایگاه باشید.
+\n
+\nاطّلاعات بیش‌تر می‌تواند در <a href="https://joinmastodon.org">joinmastodon.org</a> پیدا شود.</string>
     <string name="dialog_title_finishing_media_upload">پایان بارگذاری رسانه</string>
     <string name="dialog_message_uploading_media">در حال بارگذاری…</string>
     <string name="dialog_download_image">بارگیری</string>
@@ -130,7 +130,7 @@
     <string name="visibility_public">عمومی: فرستادن به خط زمانی‌های عمومی</string>
     <string name="visibility_unlisted">فهرست‌نشده: نشان ندادن در خط زمانی‌های عمومی</string>
     <string name="visibility_private">تنها دنبال‌کنندگان:پست فقط به دنبال‌کنندگان</string>
-    <string name="visibility_direct">مستقیم: فرستادن فقط برای کاربران اشاره‌شده</string>
+    <string name="visibility_direct">مستقیم: فرستادن فقط به کاربران اشاره شده</string>
     <string name="pref_title_edit_notification_settings">آگاهی‌ها</string>
     <string name="pref_title_notifications_enabled">آگاهی‌ها</string>
     <string name="pref_title_notification_alerts">هشدارها</string>
@@ -215,7 +215,7 @@
     <string name="abbreviated_in_minutes">در %1$d دقیقه</string>
     <string name="abbreviated_in_seconds">در %1$d ثانیه</string>
     <string name="follows_you">پیگیرتان است</string>
-    <string name="pref_title_alway_show_sensitive_media">نمایش همیشگی محتوای حساس</string>
+    <string name="pref_title_alway_show_sensitive_media">نمایش همیشگی رسانه‌های حساس</string>
     <string name="title_media">رسانه</string>
     <string name="replying_to">پاسخ دادن به @%1$s</string>
     <string name="load_more_placeholder_text">بار کردن بیش‌تر</string>
@@ -357,7 +357,7 @@
     <string name="description_visibility_direct">مستقیم</string>
     <string name="description_poll">نظرسنجی با گزینه‌ها: %1$s، %2$s، %3$s، %4$s؛ %5$s</string>
     <string name="hint_list_name">نام سیاهه</string>
-    <string name="edit_hashtag_hint">برچسب بدون #</string>
+    <string name="pick_hashtag_hint">برچسب بدون #</string>
     <string name="notifications_clear">حذف</string>
     <string name="notifications_apply_filter">پالایش</string>
     <string name="filter_apply">اعمال</string>
@@ -484,11 +484,11 @@
     <string name="drafts_failed_loading_reply">شکست در بار کردن اطّلاعات پاسخ</string>
     <string name="wellbeing_mode_notice">برخی اطّلاعات که ممکن است روی سلامتی ذهنیتان تأثیر بگذارد، پنهان خواهند شد. همچون:
 \n
-\n - آگاهی‌های برگزیدن، تقویت و پی‌گیری
-\n - شمار برگزیدن و تقویت فرسته‌ها
-\n - آمار پی‌گیر و فرسته روی نمایه‌ها
+\n- آگاهی‌های برگزیدن، تقویت و پی‌گیری
+\n- شمار برگزیدن و تقویت فرسته‌ها
+\n- آمار پی‌گیر و فرسته روی نمایه‌ها
 \n
-\n فرستادن آگاهی‌ها تأثیر نمی‌پذیرد، ولی می‌توانید ترجیحات آگاهیتان را به صورت دستی بازبینی کنید.</string>
+\nفرستادن آگاهی‌ها تأثیر نمی‌پذیرد، ولی می‌توانید ترجیحات آگاهیتان را به صورت دستی بازبینی کنید.</string>
     <string name="dialog_delete_list_warning">واقعاً می‌خواهید سیاههٔ %1$s را حذف کنید؟</string>
     <plurals name="error_upload_max_media_reached">
         <item quantity="one">نمی‌توانید بیش از %1$d رسانه بارگذارید.</item>
@@ -503,10 +503,8 @@
     <string name="notification_sign_up_format">%1$s ثبت‌نام کرد</string>
     <string name="pref_title_confirm_favourites">نمایش تأیید پیش از برگزیدن</string>
     <string name="tusky_compose_post_quicksetting_label">ایجاد فرسته</string>
-    <string name="tips_push_notification_migration">ورود دوباره به تمامی حساب‌ها برای به کار انداختن پشتیبانی آگاهی‌های ارسالی.</string>
     <string name="notification_update_description">آگاهی‌ها هنگام ویرایش فرسته‌هایی که با آن‌ها تعامل داشته‌اید</string>
     <string name="action_unbookmark">برداشن نشانک</string>
-    <string name="dialog_push_notification_migration_other_accounts">برای اعطای اجازهٔ اشتراک آگاهی‌های ارسالی به تاسکی، دوباره به حسابتان وارد شدید. با این حال هنوز حساب‌هایی دیگر دارید که این‌گونه مهاجرت داده نشده‌اند. به آن‌ها رفته و برای به کار انداختن پشتیبانی آگاهی‌های UnifiedPush یکی‌یکی دوباره وارد شوید.</string>
     <string name="action_logout_confirm">مطمئنید که می‌خواهید از %1$s خارج شوید؟ این کار تمامی داده‌های محلی از جمله پیش‌نویس‌ها و ترجیحات را حذف خواهد کرد.</string>
     <string name="duration_14_days">۱۴ روز</string>
     <string name="duration_30_days">۳۰ روز</string>
@@ -515,7 +513,6 @@
     <string name="duration_365_days">۳۶۵ روز</string>
     <string name="duration_180_days">۱۸۰ روز</string>
     <string name="status_count_one_plus">۱+</string>
-    <string name="dialog_push_notification_migration">تاسکی برای استفاده از آگاهی‌های ارسالی با UnifiedPush نیاز به اجازهٔ اشتراک آگاهی‌ها روی کارساز ماستودنتان دارد. این کار نیازمند ورود دوباره برای تغییر حوزه‌های OAuth اعطایی به تاسکی است. استفاده از گزینهٔ ورود دوباره در این‌جا یا در ترجیحات حساب، تمامی انباره‌ها و پیش‌نویس‌های محلیتان را نگه خواهد داشت.</string>
     <string name="error_could_not_load_login_page">نتوانست صفحهٔ ورود را بار کند.</string>
     <string name="pref_title_notification_filter_sign_ups">کسی ثبت‌نام کرد</string>
     <string name="notification_update_name">ویرایش‌های فرسته</string>
@@ -524,7 +521,6 @@
     <string name="pref_title_notification_filter_updates">فرسته‌ای که با آن تعامل داشته‌ام ویرایش شده</string>
     <string name="notification_sign_up_name">ثبت‌نام‌ها</string>
     <string name="notification_sign_up_description">آگاهی‌ها دربارهٔ کاربران جدید</string>
-    <string name="title_migration_relogin">ورود دوباره برای آگاهی‌های ارسالی</string>
     <string name="action_dismiss">رد کردن</string>
     <string name="action_details">جزییات</string>
     <string name="saving_draft">ذخیرهٔ پیش‌نویس…</string>
@@ -589,12 +585,14 @@
     <string name="action_post_failed">بارگذاری شکست خورد</string>
     <string name="action_post_failed_show_drafts">نمایش پیش‌نویس‌ها</string>
     <string name="action_post_failed_do_nothing">رد کردن</string>
-    <string name="action_post_failed_detail">بارگذاری فرسته‌تان شکست خورد و در پیش‌نویس‌ها ذخیره شد.
+    <plurals name="action_post_failed_detail">
+        <item quantity="one">بارگذاری فرسته‌تان شکست خورد و در پیش‌نویس‌ها ذخیره شد.
 \n
-\nارتباط با کارساز برقرار نشد یا فرسته را رد کرد.</string>
-    <string name="action_post_failed_detail_plural">بارگذاری فرسته‌هایتان شکست خورد و در پیش‌نویس‌ها ذخیره شد.
+\nارتباط با کارساز برقرار نشد یا فرسته را رد کرد.</item>
+        <item quantity="other">بارگذاری فرسته‌هایتان شکست خورد و در پیش‌نویس‌ها ذخیره شد.
 \n
-\nارتباط با کارساز برقرار نشد یا فرسته‌ها را رد کرد.</string>
+\nارتباط با کارساز برقرار نشد یا فرسته‌ها را رد کرد.</item>
+    </plurals>
     <string name="description_login">در بیش‌تر حالت‌ها کار می‌کند. هیچ داده‌ای به دیگر کاره‌ها نشت نمی‌کند.</string>
     <string name="pref_reading_order_oldest_first">نخست قدیمی‌ترین</string>
     <string name="description_browser_login">ممکن است از روش‌های تأیید خویت اضافی پشتیبانی کند؛ ولی نیازمند مرورگری پشتیبانی شده است.</string>
@@ -613,7 +611,6 @@
     <string name="total_usage">استفادهٔ کل</string>
     <string name="total_accounts">مجموع حساب‌ها</string>
     <string name="dialog_follow_hashtag_title">پی‌گیری برچسب</string>
-    <string name="dialog_follow_hashtag_hint">#برچسب</string>
     <string name="action_refresh">نوسازی</string>
     <string name="notification_unknown_name">ناشناخته</string>
     <string name="socket_timeout_exception">تماس با کارسازتان بیش از حد طول کشید</string>
@@ -645,8 +642,8 @@
     <string name="filter_edit_keyword_title">ویرایش کلیدواژه</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="pref_title_show_stat_inline">نمایش آمار فرسته‌ها در خط زمانی</string>
-    <string name="help_empty_home">این <b>خط زمانی خانگیتان</b> است. فرسته‌های جدید را از حساب‌هایی که پی‌می‌گیرید نشان می‌دهد. 
-\n 
+    <string name="help_empty_home">این <b>خط زمانی خانگیتان</b> است. فرسته‌های جدید را از حساب‌هایی که پی‌می‌گیرید نشان می‌دهد.
+\n
 \nبرای کاوش حساب‌ها می‌توانید آن‌ها را در دیگر خط‌های زمانی (برای نمونه خط زمانی محلّی نمونه‌تان [iconics gmd_group]) یافته یا با نام (برای نمونه Tusky برای حساب ماستودونمان) بجوییدشان [iconics gmd_search].</string>
     <string name="post_media_image">تصویر</string>
     <string name="select_list_manage">مدیریت سیاهه‌ها</string>
@@ -680,16 +677,16 @@
     <string name="unmuting_hashtag_success_format">ناخموش کردن برچسب #%1$s</string>
     <string name="following_hashtag_success_format">اکنون برچسب #%1$s دنبال می‌شود</string>
     <string name="unfollowing_hashtag_success_format">دیگر برچسب #%1$s دنبال نمی‌شود</string>
-    <string name="help_empty_conversations"><b>پیام‌های خصوصیتان</b> که گاهی گفت‌وگوها یا پیام‌های مستقیم نامیده می‌شوند، این‌جایند. 
-\n 
-\nپیام‌های خصوصی با تنظیم نمایانی [iconics gmd_public] فرسته به [iconics gmd_mail] <i>مستقیم</i> و نام بردن از کاربر یا کاربرانی در متن ایجاد می‌شود. 
-\n 
-\nبرای نمونه می‌توانید در نمای نمایهٔ حسابی روی دکمهٔ ایجاد [iconics gmd_edit] زده و نمایانی را تغییر دهید. \u0020</string>
-    <string name="help_empty_lists">این <b>نمایهٔ سیاهه‌تان</b> است. می‌توانید تعدادی سیاههٔ خصوصی ایحاد کرده و حساب‌ها را بدان بیفزایید. 
-\n 
-\n به خاطر داشته باشید که تنها می‌توانید افرادی را که پی می‌گیرید به سیاهه‌هایتان بیفزایید. 
-\n 
-\n این سیاهه‌ها می‌توانند به عنوان زبانه‌ای در زبانه‌های ترجیحات حساب [iconics gmd_account_circle] [iconics gmd_navigate_next] استفاده شوند. \u0020</string>
+    <string name="help_empty_conversations"><b>پیام‌های خصوصیتان</b> که گاهی گفت‌وگوها یا پیام‌های مستقیم نامیده می‌شوند این‌جایند.
+\n
+\nپیام‌های خصوصی با تنظیم نمایانی [iconics gmd_public] فرسته به [iconics gmd_mail] <i>مستقیم</i> و اشاره به کاربر یا کاربرانی در متن ایجاد می‌شود.
+\n
+\nبرای نمونه می‌توانید در نمای نمایهٔ حسابی روی دکمهٔ ایجاد [iconics gmd_edit] زده و نمایانی را تغییر دهید.</string>
+    <string name="help_empty_lists">این <b>نمایهٔ سیاهه‌تان</b> است. می‌توانید تعدادی سیاههٔ خصوصی ایحاد کرده و حساب‌ها را بدان بیفزایید.
+\n
+\nبه خاطر داشته باشید که تنها می‌توانید افرادی را که پی می‌گیرید به سیاهه‌هایتان بیفزایید.
+\n
+\nین سیاهه‌ها می‌توانند به عنوان زبانه‌ای در زبانه‌های ترجیحات حساب [iconics gmd_account_circle] [iconics gmd_navigate_next] استفاده شوند.</string>
     <string name="error_blocking_domain">شکست در خموش کردن %1$s: %2$s</string>
     <string name="error_unblocking_domain">شکست در ناخموش کردن %1$s: %2$s</string>
     <string name="label_image">تصویر</string>
@@ -724,4 +721,35 @@
     <string name="post_privacy_direct">مستقیم</string>
     <string name="pref_match_default_post_privacy">تطبیق با محرمانگی پیش‌گزیدهٔ فرسته</string>
     <string name="label_expires_after">انقضا پس از</string>
+    <string name="notification_policies_filter_out">مدیریت آگاهی‌ها از…</string>
+    <string name="notification_policies_filter_dont_follow_description">تا به طور دستی تأییدشان کنید</string>
+    <string name="notification_policies_filter_not_following_title">افرادی که پیتان نمی‌گیرند</string>
+    <string name="unknown_notification_filter_new_accounts_title">حساب‌های جدید</string>
+    <string name="unknown_notification_filter_new_accounts_description">ساخته شده در ۳۰ روز اخیر</string>
+    <string name="unknown_notification_filter_moderated_accounts">حساب‌های نظارت شده</string>
+    <string name="unknown_notification_filter_moderated_accounts_description">محدود شده به دست ناظران کارساز</string>
+    <string name="filtered_notifications">آگاهی‌های پالوده</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_title">اشاره‌های خصوصی ناخواسته</string>
+    <string name="notifications_from_people_you_may_know">آگاهی‌ها از %1$d نفری که ممکن است بشناسید‬</string>
+    <string name="notification_policy_accept">پذیرش</string>
+    <string name="notification_policy_filter">پالایش</string>
+    <string name="notification_policy_ignore">چشم‌پوشی</string>
+    <string name="accept_notification_request">پذیرش درخواست آگاهی</string>
+    <string name="dismiss_notification_request">رد درخواست آگاهی</string>
+    <string name="open_settings">گشودن ترجیحات</string>
+    <string name="notifications_from">آگاهی‌ها از %1$s</string>
+    <string name="action_accept_notification_request">پذیرش</string>
+    <string name="action_dismiss_notification_request">رد کردن</string>
+    <string name="notification_policies_title">سیاست‌های آگاهی</string>
+    <string name="notification_policies_filter_dont_follow_title">افرادی که پی نمی‌گیرید</string>
+    <string name="notification_policies_not_supported">این ویژگی تنها روی کارسازهای ماستودونی که نگارش ۴٫۳ یا بالاتر را اجرا می‌کنند پشتیبانی می‌شود.</string>
+    <string name="filtered_notifications_title">آگاهی‌های پالوده</string>
+    <string name="notification_policies_filter_not_following_description">شامل افرادی که کم‌تر از ۳ روز است پیتان می‌گیرند</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_description">پالوده مگر در پاسخ به اشارهٔ خودتان بوده یا فرستنده را پی گرفته باشید</string>
+    <string name="post_replied">پاسخ داده</string>
+    <string name="post_replied_format">در پاسخ به %1$s</string>
+    <string name="post_replied_self">رشتهٔ دنباله‌دار</string>
+    <string name="follow_hashtag_success">برچسب دنبال شدهٔ %1$s</string>
+    <string name="preview_card_by_author">از %1$s</string>
+    <string name="preview_card_more_by_author">بیش‌تر از %1$s</string>
 </resources>

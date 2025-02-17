@@ -22,12 +22,13 @@ import com.keylesspalace.tusky.components.conversation.ConversationAccountEntity
 import com.keylesspalace.tusky.createTabDataFromId
 import com.keylesspalace.tusky.db.entity.DraftAttachment
 import com.keylesspalace.tusky.entity.Attachment
-import com.keylesspalace.tusky.entity.Card
 import com.keylesspalace.tusky.entity.Emoji
 import com.keylesspalace.tusky.entity.FilterResult
 import com.keylesspalace.tusky.entity.HashTag
 import com.keylesspalace.tusky.entity.NewPoll
+import com.keylesspalace.tusky.entity.Notification
 import com.keylesspalace.tusky.entity.Poll
+import com.keylesspalace.tusky.entity.PreviewCard
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.settings.DefaultReplyVisibility
 import com.squareup.moshi.Moshi
@@ -37,6 +38,8 @@ import java.net.URLEncoder
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.forEach
+import org.json.JSONArray
 
 @OptIn(ExperimentalStdlibApi::class)
 @ProvidedTypeConverter
@@ -196,13 +199,13 @@ class Converters @Inject constructor(
     }
 
     @TypeConverter
-    fun cardToJson(card: Card?): String {
-        return moshi.adapter<Card?>().toJson(card)
+    fun cardToJson(card: PreviewCard?): String {
+        return moshi.adapter<PreviewCard?>().toJson(card)
     }
 
     @TypeConverter
-    fun jsonToCard(cardJson: String?): Card? {
-        return cardJson?.let { moshi.adapter<Card?>().fromJson(cardJson) }
+    fun jsonToCard(cardJson: String?): PreviewCard? {
+        return cardJson?.let { moshi.adapter<PreviewCard?>().fromJson(cardJson) }
     }
 
     @TypeConverter
@@ -223,5 +226,30 @@ class Converters @Inject constructor(
     @TypeConverter
     fun jsonToApplication(applicationJson: String?): Status.Application? {
         return applicationJson?.let { moshi.adapter<Status.Application?>().fromJson(it) }
+    }
+
+    @TypeConverter
+    fun notificationTypeListToJson(data: Set<Notification.Type>?): String {
+        val array = JSONArray()
+        data?.forEach {
+            array.put(it.presentation)
+        }
+        return array.toString()
+    }
+
+    @TypeConverter
+    fun jsonToNotificationTypeList(data: String?): Set<Notification.Type> {
+        val ret = HashSet<Notification.Type>()
+        data?.let {
+            val array = JSONArray(data)
+            for (i in 0 until array.length()) {
+                val item = array.getString(i)
+                val type = Notification.Type.byString(item)
+                if (type != Notification.Type.UNKNOWN) {
+                    ret.add(type)
+                }
+            }
+        }
+        return ret
     }
 }

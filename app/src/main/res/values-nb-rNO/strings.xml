@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_generic">En feil har oppstått.</string>
-    <string name="error_network">En nettverksfeil har oppstått. Sjekk tilkoblingen, og prøv igjen.</string>
+    <string name="error_network">En nettverksfeil har oppstått. Sjekk tilkoblingen og prøv igjen.</string>
     <string name="error_empty">Denne kan ikke være tom.</string>
     <string name="error_invalid_domain">Ugyldig domene</string>
     <string name="error_failed_app_registration">Kunne ikke autentisere med den instansen. Hvis dette fortsetter å skje, prøv å logge inn i nettleseren fra menyen.</string>
     <string name="error_no_web_browser_found">Fant ingen nettleser som kunne brukes.</string>
     <string name="error_authorization_unknown">En ukjent autoriseringsfeil oppsto. Hvis dette fortsetter, prøv å logge inn i nettleseren fra menyen.</string>
-    <string name="error_authorization_denied">Autorisasjon ble nektet. Hvis du er sikker på at du ga riktige data, prøv å logge inn i nettleseren fra menyen.</string>
-    <string name="error_retrieving_oauth_token">Henting av logintoken feilet. Hvis dette fortsetter prøv å logge in i nettleseren fra menyen.</string>
+    <string name="error_authorization_denied">Autorisasjon ble nektet. Hvis du er sikker på at du oppga riktige data, prøv å logge inn i nettleseren fra menyen.</string>
+    <string name="error_retrieving_oauth_token">Henting av logintoken feilet. Hvis dette fortsetter, prøv å logge inn i nettleseren fra menyen.</string>
     <string name="error_compose_character_limit">Innlegget er for langt!</string>
     <string name="error_media_upload_type">Den filtypen kan ikke lastes opp.</string>
     <string name="error_media_upload_opening">Den filen kunne ikke åpnes.</string>
@@ -62,7 +62,7 @@
     <string name="action_compose">Skriv</string>
     <string name="action_login">Logg inn med Tusky</string>
     <string name="action_logout">Logg ut</string>
-    <string name="action_logout_confirm">Er du sikker på at du vil logge ut fra kontoen %1$s\? Dette vil slette all lokal data for kontoen, som utkast og instillinger.</string>
+    <string name="action_logout_confirm">Er du sikker på at du vil logge ut fra kontoen %1$s? Dette vil slette all lokal data for kontoen, som utkast og instillinger.</string>
     <string name="action_follow">Følg</string>
     <string name="action_unfollow">Slutt å følge</string>
     <string name="action_block">Blokkér</string>
@@ -138,12 +138,12 @@
     <string name="label_header">Overskrift</string>
     <string name="link_whats_an_instance">Hva er en instans\?</string>
     <string name="login_connection">Kobler til…</string>
-    <string name="dialog_whats_an_instance">Addressen eller domenet til enhver instans kan legges til her, f. eks. mastodon.social, icosahedron.website, social.tchncs.de og <a href="https://instances.social">mer!</a>
-\n
-\nHvis du ikke har en konto kan du oppgi navnet på instansen du vil bli medlem av, og lage en konto der.
-\n
-\nEn instans der hvor du har kontoen din, men du kan lett kommunisere med og følge andre personer på andre instanser, som om du var på den samme nettsiden.
-\n
+    <string name="dialog_whats_an_instance">Addressen eller domenet til enhver instans kan legges til her, f. eks. mastodon.social, icosahedron.website, social.tchncs.de og <a href="https://instances.social">mer!</a> 
+\n 
+\nHvis du ikke har en konto kan du oppgi navnet på instansen du vil bli medlem av, og lage en konto der. 
+\n 
+\nEn instans der hvor du har kontoen din, men du kan lett kommunisere med og følge andre personer på andre instanser, som om du var på den samme nettsiden. 
+\n 
 \nDu kan finne mer info på <a href="https://joinmastodon.org">joinmastodon.org</a>. </string>
     <string name="dialog_title_finishing_media_upload">Opplasting av media er ferdig</string>
     <string name="dialog_message_uploading_media">Laster opp…</string>
@@ -325,7 +325,7 @@
     <string name="description_visibility_private">Følgere</string>
     <string name="description_visibility_direct">Direkte</string>
     <string name="hint_list_name">Listenavn</string>
-    <string name="edit_hashtag_hint">Emneord uten #</string>
+    <string name="pick_hashtag_hint">Emneord uten #</string>
     <string name="notifications_clear">Fjern</string>
     <string name="notifications_apply_filter">Filter</string>
     <string name="filter_apply">Bruk</string>
@@ -514,13 +514,9 @@
     <string name="notification_update_description">Varslinger når et innlegg du har interagert med er redigert</string>
     <string name="title_login">Logg inn</string>
     <string name="error_could_not_load_login_page">Klarte ikke å laste innloggingssiden.</string>
-    <string name="title_migration_relogin">Logg inn på nytt for pushvarsler</string>
     <string name="action_dismiss">Avvis</string>
     <string name="action_details">Detaljer</string>
     <string name="account_date_joined">Ble med %1$s</string>
-    <string name="tips_push_notification_migration">Logg inn all konti på nytt for å skru på pushvarsler.</string>
-    <string name="dialog_push_notification_migration">For å kunne sende pushvarsler via UnifiedPush trenger Tusky tillatelse til å abonnere på varsler på Mastodon-serveren. Dette krever at du logger inn på nytt. Ved å bruke muligheten til å logge inn på nytt her eller i kontoinstillinger vil alle lokale utkast være tilgjengelig også etter at du har logget inn på nytt.</string>
-    <string name="dialog_push_notification_migration_other_accounts">Du har logget inn på nytt for å tillate Tusky til å sende pushvarsler, men du har fortsatt andre konti som ikke har fått den nødvendige tillatelsen. Bytt til dem og logg inn på nytt på samme måte for å skru på støtte for pushvarsler via UnifiedPush.</string>
     <string name="saving_draft">Lagrer utkast…</string>
     <string name="status_count_one_plus">1+</string>
     <string name="action_edit_image">Rediger bilde</string>
@@ -568,15 +564,14 @@
     <string name="action_unfollow_hashtag_format">Slutte å følge #%1$s\?</string>
     <string name="confirmation_hashtag_unfollowed">Sluttet å følge #%1$s</string>
     <string name="a11y_label_loading_thread">Laster tråd</string>
-    <string name="help_empty_home">Dette er <b>Hjemmetidslinjen</b>din. Den viser de nyeste innleggene av kontoer du følger.
-\n
+    <string name="help_empty_home">Dette er <b>Hjemmetidslinjen</b>din. Den viser de nyeste innleggene av kontoer du følger. 
+\n 
 \nFor å utforske kontoer kan du enten oppdage dem i en av tidslinjene dine, for eksempel den lokale tidslinjen for instansen din [iconics gmd_group], eller du kan søke etter navnet deres [iconics gmd_search]; søk for eksempel etter Tusky før å finne Mastodonkonten vår.</string>
     <string name="pref_title_reading_order">Leserekkefølge</string>
     <string name="pref_reading_order_oldest_first">Eldste først</string>
     <string name="pref_ui_text_size">Skriftstørrelse for brukergrensesnitt</string>
     <string name="pref_reading_order_newest_first">Nyeste først</string>
-    <string name="dialog_follow_hashtag_title">Følg emneknagger</string>
-    <string name="dialog_follow_hashtag_hint">#emneknagg</string>
+    <string name="dialog_follow_hashtag_title">Følg emneknagg</string>
     <string name="accessibility_talking_about_tag">%1$d folk snakker om emneknaggen %2$s</string>
     <string name="total_usage">Total bruk</string>
     <string name="total_accounts">Totale kontoer</string>
@@ -599,10 +594,15 @@
     <string name="filter_edit_keyword_title">Endre nøkkelord</string>
     <string name="filter_description_format">%1$s: %2$s</string>
     <string name="pref_title_http_proxy_port_message">Portnummer burde være mellom %1$d og %2$d</string>
-    <string name="action_post_failed">Opplastningen mislykkets</string>
-    <string name="action_post_failed_detail_plural">Opplastningen av innleggene dine mislykktes og de har blitt lagret som utkast.
+    <string name="action_post_failed">Opplastningen mislyktes</string>
+    <plurals name="action_post_failed_detail">
+        <item quantity="one">Opplastingen mislyktes og har blitt lagret som utkast.
 \n
-\nEnten kunne ikke tjeneren nås, eller så ble opplastningen nektet.</string>
+\nEnten kunne ikke tjeneren ikke kontaktes, eller så ble posten avvist.</item>
+        <item quantity="other">Opplastningen av innleggene dine mislyktes og de har blitt lagret som utkast.
+\n
+\nEnten kunne ikke tjeneren nås, eller så ble opplastningen avvist.</item>
+    </plurals>
     <string name="action_post_failed_show_drafts">Vis utkast</string>
     <string name="action_post_failed_do_nothing">Lukk</string>
     <string name="post_media_alt">ALT</string>
@@ -616,9 +616,6 @@
     <string name="action_browser_login">Logg inn med nettleseren</string>
     <string name="description_browser_login">Kan støtte flere autentiseringsmetoder, men trenger en støttet nettleser.</string>
     <string name="description_login">Virker som oftest. Ingen informasjon deles med andre apper.</string>
-    <string name="action_post_failed_detail">Opplastingen misslykktes og har blit lagret som utkast.
-\n
-\nEnten kunne tjeneren ikke kontakteres, eller den nektet opplastningen.</string>
     <string name="ui_success_accepted_follow_request">Følgeforespørsel akseptert</string>
     <string name="action_discard">Forkast endringer</string>
     <string name="action_continue_edit">Fortsett endring</string>
@@ -638,7 +635,7 @@
     <string name="send_account_username_to">Del kontoens brukernavn med…</string>
     <string name="account_username_copied">Brukernavn kopiert</string>
     <string name="error_status_source_load">Kunne ikke laste status fra tjeneren.</string>
-    <string name="status_filtered_show_anyway">Vis allikevel</string>
+    <string name="status_filtered_show_anyway">Vis likevel</string>
     <string name="status_filter_placeholder_label_format">Filtrert: %1$s</string>
     <string name="pref_title_account_filter_keywords">Profiler</string>
     <string name="action_add">Legg til</string>
@@ -656,4 +653,11 @@
     <string name="error_missing_edits">Serveren din vet at denne posten ble endret, men har ingen kopi av entringene så de kann ikke vises.
 \n
 \nDette er <a href="https://github.com/mastodon/mastodon/issues/25398">Mastodon issue #25398</a>.</string>
+    <string name="pref_title_show_self_boosts">Vis selvompostinger</string>
+    <string name="error_media_upload_sending_fmt">Opplasting feilet: %1$s</string>
+    <string name="error_blocking_domain">Kunne ikke dempe %1$s: %2$s</string>
+    <string name="error_unblocking_domain">Kunne ikke skru av dempingen av %1$s: %2$s</string>
+    <string name="error_deleting_filter">Kunne ikke slette filter \'%1$s\'</string>
+    <string name="error_saving_filter">Kunne ikke lagre filter \'%1$s\'</string>
+    <string name="title_public_trending_statuses">Trendende poster</string>
 </resources>

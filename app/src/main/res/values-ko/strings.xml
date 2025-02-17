@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_generic">오류가 발생했습니다.</string>
-    <string name="error_network">네트워크 오류가 발생했습니다! 인터넷 연결을 확인하고 다시 시도하십시오!</string>
+    <string name="error_network">네트워크 오류가 발생했습니다. 인터넷 연결을 확인하고 다시 시도하십시오.</string>
     <string name="error_empty">내용을 입력하십시오.</string>
     <string name="error_invalid_domain">도메인이 올바르지 않습니다</string>
-    <string name="error_failed_app_registration">해당 인스턴스에 대한 인증에 실패했습니다.</string>
+    <string name="error_failed_app_registration">인증에 실패했습니다. 이 화면이 계속된다면, 브라우저에 메뉴에서 로그인을 시도하십시오.</string>
     <string name="error_no_web_browser_found">사용 가능한 웹 브라우저를 찾을 수 없습니다.</string>
     <string name="error_authorization_unknown">알 수 없는 인증 오류가 발생했습니다.</string>
-    <string name="error_authorization_denied">인증이 거부되었습니다.</string>
-    <string name="error_retrieving_oauth_token">로그인 토큰을 받아올 수 없습니다.</string>
+    <string name="error_authorization_denied">인증이 거부되었습니다. 올바른 자격 증명을 입력했는지 확인하면 메뉴에서 브라우저로 로그인해 보세요.</string>
+    <string name="error_retrieving_oauth_token">로그인 토큰을 받아올 수 없습니다. 이 증상이 지속된다면, 메뉴에서 브라우저로 로그인을 시도하십시오.</string>
     <string name="error_compose_character_limit">게시물 길이가 너무 깁니다!</string>
     <string name="error_media_upload_type">이 파일은 첨부할 수 없습니다.</string>
     <string name="error_media_upload_opening">이 파일을 읽지 못했습니다.</string>
@@ -142,12 +142,12 @@
     <string name="label_header">헤더</string>
     <string name="link_whats_an_instance">인스턴스가 무엇인가요\?</string>
     <string name="login_connection">연결 중...</string>
-    <string name="dialog_whats_an_instance">인스턴스의 도메인 주소나 IP주소를 입력하실 수 있습니다. mastodon.social, icosahedron.website, social.tchncs.de 등이 있으며, 그 외에도 <a href="https://instances.social">더 많은 인스턴스</a>가 당신을 기다리고 있습니다!
-\n
-\n만약 계정이 없으시다면, 인스턴스 주소를 입력하신 후에 계정을 만드실 수 있습니다.
-\n
-\n여러분이 어느 인스턴스에 가입하시더라도, 다른 인스턴스에 있는 유저들과 문제 없이 소통하실 수 있습니다.
-\n
+    <string name="dialog_whats_an_instance">인스턴스의 도메인 주소나 IP주소를 입력하실 수 있습니다. mastodon.social, icosahedron.website, social.tchncs.de 등이 있으며, 그 외에도 <a href="https://instances.social">더 많은 인스턴스</a>가 당신을 기다리고 있습니다! 
+\n 
+\n만약 계정이 없으시다면, 인스턴스 주소를 입력하신 후에 계정을 만드실 수 있습니다. 
+\n 
+\n여러분이 어느 인스턴스에 가입하시더라도, 다른 인스턴스에 있는 유저들과 문제 없이 소통하실 수 있습니다. 
+\n 
 \n자세한 사항은 <a href="https://joinmastodon.org">joinmastodon.org</a>을 참조하세요. </string>
     <string name="dialog_title_finishing_media_upload">미디어 업로드 완료</string>
     <string name="dialog_message_uploading_media">업로드 중...</string>
@@ -356,7 +356,7 @@
     <string name="description_visibility_direct">다이렉트</string>
     <string name="description_poll">투표 선택지: %1$s, %2$s, %3$s, %4$s, %5$s</string>
     <string name="hint_list_name">리스트 이름</string>
-    <string name="edit_hashtag_hint">#를 제외한 해시태그</string>
+    <string name="pick_hashtag_hint">#를 제외한 해시태그</string>
     <string name="notifications_clear">알림 지우기</string>
     <string name="notifications_apply_filter">필터</string>
     <string name="filter_apply">적용</string>
@@ -416,4 +416,10 @@
     <string name="action_edit">수정</string>
     <string name="hashtags">해시태그</string>
     <string name="notification_follow_request_name">팔로우 요청</string>
+    <string name="error_multimedia_size_limit">비디오또는 오디오파일의 용량은 %1$s MB를 넘을 수 없습니다.</string>
+    <string name="error_image_edit_failed">이 이미지는 수정할 수 없습니다.</string>
+    <string name="error_following_hashtag_format"># %1$s 를 팔로우 하는 중 오류가 발생했습니다.</string>
+    <string name="error_media_upload_sending_fmt">"업로드 실패 :  %1$s"</string>
+    <string name="error_loading_account_details">계정 세부정보를 불러오는 것에 실패했습니다.</string>
+    <string name="error_could_not_load_login_page">로그인 페이지를 불러올 수 없습니다.</string>
 </resources>

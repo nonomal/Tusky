@@ -71,7 +71,6 @@
     <string name="title_mutes">Muted users</string>
     <string name="title_blocks">Blocked users</string>
     <string name="title_domain_mutes">Hidden domains</string>
-    <string name="title_migration_relogin">Re-login for push notifications</string>
     <string name="title_follow_requests">Follow requests</string>
     <string name="title_edit_profile">Edit your profile</string>
     <string name="title_drafts">Drafts</string>
@@ -82,10 +81,13 @@
     <string name="title_edits">Edits</string>
 
     <string name="dialog_follow_hashtag_title">Follow hashtag</string>
-    <string name="dialog_follow_hashtag_hint">#hashtag</string>
+    <string name="follow_hashtag_success">Followed hashtag %1$s</string>
 
     <string name="post_username_format">\@%1$s</string>
     <string name="post_boosted_format">%1$s boosted</string>
+    <string name="post_replied">Replied</string>
+    <string name="post_replied_format">In reply to %1$s</string>
+    <string name="post_replied_self">Continued thread</string>
     <string name="post_sensitive_media_title">Sensitive content</string>
     <string name="post_media_hidden_title">Media hidden</string>
     <string name="post_media_alt">ALT</string>
@@ -128,8 +130,10 @@
     <string name="action_logout">Log out</string>
     <string name="action_logout_confirm">Are you sure you want to log out of %1$s? This will delete all local data of the account, including drafts and preferences.</string>
     <string name="action_post_failed">Upload failed</string>
-    <string name="action_post_failed_detail">Your post failed to upload and has been saved to drafts.\n\nEither the server could not be contacted, or it rejected the post.</string>
-    <string name="action_post_failed_detail_plural">Your posts failed to upload and have been saved to drafts.\n\nEither the server could not be contacted, or it rejected the posts.</string>
+    <plurals name="action_post_failed_detail">
+        <item quantity="one">Your post failed to upload and has been saved to drafts.\n\nEither the server could not be contacted, or it rejected the post.</item>
+        <item quantity="other">Your posts failed to upload and have been saved to drafts.\n\nEither the server could not be contacted, or it rejected the posts.</item>
+    </plurals>
     <string name="action_post_failed_show_drafts">Show drafts</string>
     <string name="action_post_failed_do_nothing">Dismiss</string>
     <string name="action_follow">Follow</string>
@@ -256,15 +260,7 @@
 
     <string name="login_connection">Connecting…</string>
 
-    <string name="dialog_whats_an_instance">The address or domain of any instance can be entered
-        here, such as mastodon.social, icosahedron.website, social.tchncs.de, and
-        <a href="https://instances.social">more!</a>
-        \n\nIf you don\'t yet have an account, you can enter the name of the instance you\'d like to
-        join and create an account there.\n\nAn instance is a single place where your account is
-        hosted, but you can easily communicate with and follow folks on other instances as though
-        you were on the same site.
-        \n\nMore info can be found at <a href="https://joinmastodon.org">joinmastodon.org</a>.
-    </string>
+    <string name="dialog_whats_an_instance">The address or domain of any instance can be entered here, such as mastodon.social, icosahedron.website, social.tchncs.de, and <a href="https://instances.social">more!</a>\n\nIf you don\'t yet have an account, you can enter the name of the instance you\'d like to join and create an account there.\n\nAn instance is a single place where your account is hosted, but you can easily communicate with and follow folks on other instances as though you were on the same site.\n\nMore info can be found at <a href="https://joinmastodon.org">joinmastodon.org</a>.</string>
     <string name="dialog_title_finishing_media_upload">Finishing Media Upload</string>
     <string name="dialog_message_uploading_media">Uploading…</string>
     <string name="dialog_download_image">Download</string>
@@ -454,7 +450,7 @@
     <string name="abbreviated_seconds_ago">%1$ds</string>
 
     <string name="follows_you">Follows you</string>
-    <string name="pref_title_alway_show_sensitive_media">Always show sensitive content</string>
+    <string name="pref_title_alway_show_sensitive_media">Always show sensitive media</string>
     <string name="pref_title_alway_open_spoiler">Always expand posts marked with content warnings</string>
     <string name="title_media">Media</string>
     <string name="replying_to">Replying to @%1$s</string>
@@ -621,7 +617,7 @@
     <string name="hint_list_name">List name</string>
 
     <string name="add_hashtag_title">Add hashtag</string>
-    <string name="edit_hashtag_hint">Hashtag without #</string>
+    <string name="pick_hashtag_hint">Hashtag without #</string>
     <string name="hashtags">Hashtags</string>
     <string name="select_list_title">Select list</string>
     <string name="select_list_manage">Manage lists</string>
@@ -688,7 +684,7 @@
     <string name="report_remote_instance">Forward to %1$s</string>
     <string name="failed_report">Failed to report</string>
     <string name="failed_fetch_posts">Failed to fetch posts</string>
-    <string name="report_description_1">The report will be sent to your server moderator. You can provide an explanation of why you are reporting this account below:</string>
+    <string name="report_description_1">The report will be sent to your server moderators. You can provide an explanation of why you are reporting this account below:</string>
     <string name="report_description_remote_instance">The account is from another server. Send an anonymized copy of the report there as well?</string>
     <string name="title_accounts">Accounts</string>
     <string name="failed_search">Failed to search</string>
@@ -736,12 +732,11 @@
     <string name="account_note_hint">Your private note about this account</string>
     <string name="account_note_saved">Saved!</string>
 
-    <string name="wellbeing_mode_notice">Some information that might affect your mental wellbeing will be hidden. This includes:\n\n
-        - Favorite/Boost/Follow notifications\n
-        - Favorite/Boost count on posts\n
-        - Follower/Post stats on profiles\n\n
-        Push-notifications will not be affected, but you can review your notification preferences manually.
-    </string>
+    <string name="wellbeing_mode_notice">Some information that might affect your mental wellbeing will be hidden. This includes:
+\n\n- Favorite/Boost/Follow notifications
+\n- Favorite/Boost count on posts
+\n- Follower/Post stats on profiles
+\n\nPush-notifications will not be affected, but you can review your notification preferences manually.</string>
     <string name="review_notifications">Review Notifications</string>
     <string name="limit_notifications">Limit timeline notifications</string>
     <string name="wellbeing_hide_stats_posts">Hide quantitative stats on posts</string>
@@ -767,10 +762,6 @@
     <string name="account_date_joined">Joined %1$s</string>
 
     <string name="saving_draft">Saving draft…</string>
-
-    <string name="tips_push_notification_migration">Re-login all accounts to enable push notification support.</string>
-    <string name="dialog_push_notification_migration">In order to use push notifications via UnifiedPush, Tusky needs permission to subscribe to notifications on your Mastodon server. This requires a re-login to change the OAuth scopes granted to Tusky. Using the re-login option here or in "Account preferences" will preserve all of your local drafts and cache.</string>
-    <string name="dialog_push_notification_migration_other_accounts">You have re-logged into your current account to grant push subscription permission to Tusky. However, you still have other accounts that have not been migrated this way. Switch to them and re-login one by one in order to enable UnifiedPush notifications support.</string>
 
     <string name="delete_scheduled_post_warning">Delete this scheduled post?</string>
 
@@ -835,21 +826,9 @@
     <string name="filter_edit_keyword_title">Edit keyword</string>
     <string name="filter_description_format">%1$s: %2$s</string>
 
-    <string name="help_empty_home">This is your <b>home timeline</b>. It shows the recent posts of the accounts
-        you follow.\n\nTo explore accounts you can either discover them in one of the other timelines.
-        For example the local timeline of your instance [iconics gmd_group]. Or you can search them
-        by name [iconics gmd_search]; for example search for Tusky to find our Mastodon account.</string>
-    <string name="help_empty_conversations">Here are your <b>private messages</b>; sometimes called conversations or direct messages (DM).
-        \n\nPrivate messages are created by setting the visibility [iconics gmd_public] of a post to [iconics gmd_mail] <i>Direct</i> and
-        mentioning one or more users in the text.
-        \n\nFor example you can start on the profile view of an account and tap the create button [iconics gmd_edit] and change the visibility.
-    </string>
-    <string name="help_empty_lists">This is your <b>lists view</b>. You can define a number of private lists and add accounts to that.
-        \n\n
-        NOTE that you can only add accounts you follow to your lists.
-        \n\n
-        These lists can be used as a tab in Account preferences [iconics gmd_account_circle] [iconics gmd_navigate_next] Tabs.
-    </string>
+    <string name="help_empty_home">This is your <b>home timeline</b>. It shows the recent posts of the accounts you follow.\n\nTo explore accounts you can either discover them in one of the other timelines. For example the local timeline of your instance [iconics gmd_group]. Or you can search them by name [iconics gmd_search]; for example search for Tusky to find our Mastodon account.</string>
+    <string name="help_empty_conversations">Here are your <b>private messages</b>; sometimes called conversations or direct messages (DM).\n\nPrivate messages are created by setting the visibility [iconics gmd_public] of a post to [iconics gmd_mail] <i>Direct</i> and mentioning one or more users in the text.\n\nFor example you can start on the profile view of an account and tap the create button [iconics gmd_edit] and change the visibility.</string>
+    <string name="help_empty_lists">This is your <b>lists view</b>. You can define a number of private lists and add accounts to that.\n\nNOTE that you can only add accounts you follow to your lists.\n\nThese lists can be used as a tab in Account preferences [iconics gmd_account_circle] [iconics gmd_navigate_next] Tabs.</string>
 
     <string name="load_newest_notifications">Load newest notifications</string>
     <string name="about_copy">Copy version and device information</string>
@@ -865,4 +844,37 @@
     <string name="list_reply_policy_label">Show replies to</string>
 
     <string name="unknown_notification_type">Unknown notification type</string>
+
+    <string name="preview_card_by_author">By %1$s</string>
+    <string name="preview_card_more_by_author">More by %1$s</string>
+
+    <string name="notification_policies_title">Notification Policies</string>
+    <string name="notification_policies_filter_out">Manage notifications from…</string>
+
+    <string name="notification_policies_filter_dont_follow_title">People you don\'t follow</string>
+    <string name="notification_policies_filter_dont_follow_description">Until you manually approve them</string>
+    <string name="notification_policies_filter_not_following_title">People not following you</string>
+    <string name="notification_policies_filter_not_following_description">Including people who have been following you fewer than 3 days</string>
+    <string name="unknown_notification_filter_new_accounts_title">New accounts</string>
+    <string name="unknown_notification_filter_new_accounts_description">Created within the past 30 days</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_title">Unsolicited private mentions</string>
+    <string name="unknown_notification_filter_unsolicited_private_mentions_description">Filtered unless it\'s in reply to your own mention or if you follow the sender</string>
+    <string name="unknown_notification_filter_moderated_accounts">Moderated accounts</string>
+    <string name="unknown_notification_filter_moderated_accounts_description">Limited by server moderators</string>
+
+    <string name="notification_policies_not_supported">This feature is only supported on Mastodon servers running v4.3.0 or later.</string>
+    <string name="filtered_notifications">Filtered notifications</string>
+    <string name="notifications_from_people_you_may_know">Notifications from %1$d people you may know</string>
+
+    <string name="notification_policy_accept">Accept</string>
+    <string name="notification_policy_filter">Filter</string>
+    <string name="notification_policy_ignore">Ignore</string>
+    <string name="filtered_notifications_title">Filtered Notifications</string>
+    <string name="accept_notification_request">Accept notification request</string>
+    <string name="dismiss_notification_request">Dismiss notification request</string>
+    <string name="open_settings">Open preferences</string>
+    <string name="notifications_from">Notifications from %1$s</string>
+    <string name="action_accept_notification_request">Accept</string>
+    <string name="action_dismiss_notification_request">Dismiss</string>
+
 </resources>

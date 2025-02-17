@@ -41,13 +41,12 @@ import com.keylesspalace.tusky.appstore.StatusScheduledEvent
 import com.keylesspalace.tusky.components.compose.MediaUploader
 import com.keylesspalace.tusky.components.compose.UploadEvent
 import com.keylesspalace.tusky.components.drafts.DraftHelper
-import com.keylesspalace.tusky.components.systemnotifications.NotificationHelper
 import com.keylesspalace.tusky.db.AccountManager
 import com.keylesspalace.tusky.entity.Attachment
 import com.keylesspalace.tusky.entity.MediaAttribute
 import com.keylesspalace.tusky.entity.NewPoll
 import com.keylesspalace.tusky.entity.NewStatus
-import com.keylesspalace.tusky.entity.ScheduledStatus
+import com.keylesspalace.tusky.entity.ScheduledStatusReply
 import com.keylesspalace.tusky.entity.Status
 import com.keylesspalace.tusky.network.MastodonApi
 import com.keylesspalace.tusky.util.getParcelableExtraCompat
@@ -290,7 +289,7 @@ class SendStatusService : Service() {
                 mediaUploader.cancelUploadScope(*statusToSend.media.map { it.localId }.toIntArray())
 
                 if (scheduled) {
-                    eventHub.dispatch(StatusScheduledEvent(sentStatus as ScheduledStatus))
+                    eventHub.dispatch(StatusScheduledEvent((sentStatus as ScheduledStatusReply).id))
                 } else if (!isNew) {
                     eventHub.dispatch(StatusChangedEvent(sentStatus as Status))
                 } else {
@@ -413,7 +412,7 @@ class SendStatusService : Service() {
             this,
             statusId,
             intent,
-            NotificationHelper.pendingIntentFlags(false)
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
     }
 
@@ -429,7 +428,7 @@ class SendStatusService : Service() {
             this,
             statusId,
             intent,
-            NotificationHelper.pendingIntentFlags(false)
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE,
         )
 
         return NotificationCompat.Builder(this@SendStatusService, CHANNEL_ID)

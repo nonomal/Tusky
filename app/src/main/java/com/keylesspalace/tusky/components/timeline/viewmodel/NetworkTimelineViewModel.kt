@@ -31,6 +31,7 @@ import com.keylesspalace.tusky.appstore.DomainMuteEvent
 import com.keylesspalace.tusky.appstore.Event
 import com.keylesspalace.tusky.appstore.EventHub
 import com.keylesspalace.tusky.appstore.MuteEvent
+import com.keylesspalace.tusky.appstore.PollVoteEvent
 import com.keylesspalace.tusky.appstore.StatusChangedEvent
 import com.keylesspalace.tusky.appstore.StatusDeletedEvent
 import com.keylesspalace.tusky.appstore.UnfollowEvent
@@ -96,7 +97,7 @@ class NetworkTimelineViewModel @Inject constructor(
                 currentSource = source
             }
         },
-        remoteMediator = NetworkTimelineRemoteMediator(accountManager, this)
+        remoteMediator = NetworkTimelineRemoteMediator(this)
     ).flow
         .map { pagingData ->
             pagingData.filter(Dispatchers.Default.asExecutor()) { statusViewData ->
@@ -116,6 +117,7 @@ class NetworkTimelineViewModel @Inject constructor(
     private fun handleEvent(event: Event) {
         when (event) {
             is StatusChangedEvent -> handleStatusChangedEvent(event.status)
+            is PollVoteEvent -> handlePollVote(event.statusId, event.poll)
             is UnfollowEvent -> {
                 if (kind == Kind.HOME) {
                     val id = event.accountId
@@ -146,12 +148,6 @@ class NetworkTimelineViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    override fun updatePoll(newPoll: Poll, status: StatusViewData.Concrete) {
-        status.copy(
-            status = status.status.copy(poll = newPoll)
-        ).update()
     }
 
     override fun changeExpanded(expanded: Boolean, status: StatusViewData.Concrete) {
@@ -297,6 +293,12 @@ class NetworkTimelineViewModel @Inject constructor(
         updateStatusByActionableId(status.id) { status }
     }
 
+    private fun handlePollVote(statusId: String, poll: Poll) {
+        updateStatusByActionableId(statusId) { status ->
+            status.copy(poll = poll)
+        }
+    }
+
     override fun fullReload() {
         nextKey = statusData.firstOrNull { it is StatusViewData.Concrete }?.asStatusOrNull()?.id
         statusData.clear()
@@ -304,7 +306,7 @@ class NetworkTimelineViewModel @Inject constructor(
     }
 
     override fun clearWarning(status: StatusViewData.Concrete) {
-        updateStatusByActionableId(status.id) {
+        updateStatusByActionableId(status.actionableId) {
             it.copy(filtered = emptyList())
         }
     }
